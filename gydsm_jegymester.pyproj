@@ -9,7 +9,7 @@
     <StartupFile>jegymester\run_app.py</StartupFile>
     <SearchPath>
     </SearchPath>
-    <WorkingDirectory>jegymester\</WorkingDirectory>
+    <WorkingDirectory>.</WorkingDirectory>
     <LaunchProvider>Web launcher</LaunchProvider>
     <WebBrowserUrl>http://localhost</WebBrowserUrl>
     <OutputPath>.</OutputPath>
@@ -18,6 +18,8 @@
     <RootNamespace>gydsm_jegymester</RootNamespace>
     <IsWindowsApplication>False</IsWindowsApplication>
     <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <WebBrowserPort>8888</WebBrowserPort>
+    <SuppressPackageInstallationPrompt>True</SuppressPackageInstallationPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,6 +30,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="jegymester\.flaskenv" />
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
