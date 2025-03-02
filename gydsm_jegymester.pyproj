@@ -44,6 +44,17 @@
     <Compile Include="jegymester\app\extensions.py" />
     <Compile Include="jegymester\app\main\routes.py" />
     <Compile Include="jegymester\app\main\__init__.py" />
+    <Compile Include="jegymester\app\models\movie.py" />
+    <Compile Include="jegymester\app\models\order.py" />
+    <Compile Include="jegymester\app\models\role.py" />
+    <Compile Include="jegymester\app\models\screening.py" />
+    <Compile Include="jegymester\app\models\seat.py" />
+    <Compile Include="jegymester\app\models\theater.py" />
+    <Compile Include="jegymester\app\models\ticket.py" />
+    <Compile Include="jegymester\app\models\ticketcategory.py" />
+    <Compile Include="jegymester\app\models\ticketorder.py" />
+    <Compile Include="jegymester\app\models\user.py" />
+    <Compile Include="jegymester\app\models\userrole.py" />
     <Compile Include="jegymester\app\models\__init__.py" />
     <Compile Include="jegymester\app\__init__.py" />
     <Compile Include="jegymester\config.py" />

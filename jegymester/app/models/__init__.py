@@ -1,0 +1,11 @@
+﻿import app.models.movie
+import app.models.order
+import app.models.role
+import app.models.screening
+import app.models.seat
+import app.models.theater
+import app.models.ticket
+import app.models.ticketcategory
+import app.models.ticketorder
+import app.models.user
+import app.models.userrole
