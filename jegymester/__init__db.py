@@ -132,11 +132,16 @@ try:
     screening2 = Screening.query.filter_by(movie_id=movie2.id).first()
     adult_category = TicketCategory.query.filter_by(catname="Felnőtt").first()
     student_category = TicketCategory.query.filter_by(catname="Diák").first()
-    if not Ticket.query.filter_by(screening_id=screening1.id, user_id=user.id).first():
-        ticket = Ticket(screening_id=screening1.id, user_id=user.id, ticketcategory_id=adult_category.id)
-        ticket2 = Ticket(screening_id=screening2.id, user_id=user.id, ticketcategory_id=student_category.id)
-        db.session.add_all([ticket, ticket2])
-        db.session.commit()
+    seat1 = Seat.query.filter_by(theater_id=screening1.theater_id, reserved=False).first()
+    seat2 = Seat.query.filter_by(theater_id=screening2.theater_id, reserved=False).first()
+    if seat1 and seat2:
+        if not Ticket.query.filter_by(screening_id=screening1.id, user_id=user.id).first():
+            ticket = Ticket(screening_id=screening1.id, user_id=user.id, ticketcategory_id=adult_category.id, seat_id=seat1.id)
+            ticket2 = Ticket(screening_id=screening2.id, user_id=user.id, ticketcategory_id=student_category.id, seat_id=seat2.id)
+            db.session.add_all([ticket, ticket2])
+            seat1.reserved = True
+            seat2.reserved = True
+            db.session.commit()
 
     # TicketOrder (junction table)
     order = Order.query.filter_by(payment_status="Pending").first()

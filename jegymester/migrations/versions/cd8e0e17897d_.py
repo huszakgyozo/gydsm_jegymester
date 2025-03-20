@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 302443a4fbcb
+Revision ID: cd8e0e17897d
 Revises: 
-Create Date: 2025-03-02 10:59:08.328790
+Create Date: 2025-03-20 20:25:08.085928
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '302443a4fbcb'
+revision = 'cd8e0e17897d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -73,6 +73,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('theater_id', sa.Integer(), nullable=False),
     sa.Column('seat_number', sa.String(length=10), nullable=False),
+    sa.Column('reserved', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['theater_id'], ['theaters.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -88,7 +89,9 @@ def upgrade():
     sa.Column('screening_id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('ticketcategory_id', sa.Integer(), nullable=False),
+    sa.Column('seat_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['screening_id'], ['screenings.id'], ),
+    sa.ForeignKeyConstraint(['seat_id'], ['seats.id'], ),
     sa.ForeignKeyConstraint(['ticketcategory_id'], ['ticketcategories.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
