@@ -1,5 +1,5 @@
 ﻿from __future__ import annotations
-
+from werkzeug.security import generate_password_hash, check_password_hash
 from app.extensions import db
 from typing import List, Optional
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -20,7 +20,9 @@ class User(db.Model):
     tickets: Mapped[List["Ticket"]] = relationship(back_populates="user")
 
     def set_password(self, password: str) -> None:
-        # Placeholder for password hashing (implement with a library like Werkzeug)
-        from werkzeug.security import generate_password_hash
         self.password_hash = generate_password_hash(password)
+
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 

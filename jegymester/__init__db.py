@@ -73,6 +73,42 @@ try:
             description="Reality is a simulation"
         )
         db.session.add(movie2)
+    if not Movie.query.filter_by(title="Zalán_futása").first():
+        movie3 = Movie(
+            title="Zalán_futása",
+            duration=200,
+            genre="Adventure",
+            age_limit=18,
+            description="Run away as fast as you can from Zalan"
+        )
+        db.session.add(movie3)
+    if not Movie.query.filter_by(title="Egyetemistak_elete").first():
+        movie4 = Movie(
+            title="Egyetemistak_elete",
+            duration=90,
+            genre="Reality",
+            age_limit=16,
+            description="Look behind the curtian, what happening in an uni"
+        )
+        db.session.add(movie4)
+    if not Movie.query.filter_by(title="A_nagy_kanape_pakolas").first():
+        movie5 = Movie(
+            title="A_nagy_kanape_pakolas",
+            duration=60,
+            genre="Documentary",
+            age_limit=10,
+            description="Come with us, and we show you how you sucessfully outbring a sofa from a tiny apartmen"
+        )
+        db.session.add(movie5)
+    if not Movie.query.filter_by(title="ETS_GRIND").first():
+        movie6 = Movie(
+            title="ETS_GRIND",
+            duration=60,
+            genre="Funny",
+            age_limit=10,
+            description="Come to a beautiful trip to the simulators world"
+        )
+        db.session.add(movie6)
     db.session.commit()
 
     # Theaters
