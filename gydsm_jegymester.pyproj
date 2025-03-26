@@ -11,7 +11,7 @@
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <LaunchProvider>Web launcher</LaunchProvider>
-    <WebBrowserUrl>http://localhost</WebBrowserUrl>
+    <WebBrowserUrl>http://localhost/swagger</WebBrowserUrl>
     <OutputPath>.</OutputPath>
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
     <Name>gydsm_jegymester</Name>
@@ -36,14 +36,14 @@
   <ItemGroup>
     <Folder Include="jegymester\" />
     <Folder Include="jegymester\app\" />
-    <Folder Include="jegymester\app\main\" />
+    <Folder Include="jegymester\app\blueprints\" />
+    <Folder Include="jegymester\app\blueprints\user\" />
     <Folder Include="jegymester\app\models\" />
     <Folder Include="jegymester\app\templates\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="jegymester\app\extensions.py" />
-    <Compile Include="jegymester\app\main\routes.py" />
-    <Compile Include="jegymester\app\main\__init__.py" />
+    <Compile Include="jegymester\app\blueprints\__init__.py" />
     <Compile Include="jegymester\app\models\movie.py" />
     <Compile Include="jegymester\app\models\order.py" />
     <Compile Include="jegymester\app\models\role.py" />

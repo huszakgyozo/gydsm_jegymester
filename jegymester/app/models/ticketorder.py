@@ -14,4 +14,4 @@ class TicketOrder(db.Model):
     ticket_status: Mapped[str] = mapped_column(String(20), nullable=False, default="aktív")
 
     order: Mapped["Order"] = relationship(back_populates="tickets")
-    ticket: Mapped["Ticket"] = relationship()  # Optional, depending on your needs
+    ticket: Mapped["Ticket"] = relationship()

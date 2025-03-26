@@ -10,7 +10,7 @@ class Movie(db.Model):
     __tablename__ = "movies"
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
-    duration: Mapped[int] = mapped_column(Integer, nullable=False)  # In minutes
+    duration: Mapped[int] = mapped_column(Integer, nullable=False)
     genre: Mapped[str] = mapped_column(String(50), nullable=False)
     age_limit: Mapped[int] = mapped_column(Integer, nullable=False)
     description: Mapped[str] = mapped_column(String(500), nullable=False)

@@ -15,4 +15,4 @@ class Seat(db.Model):
     reserved: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
 
     theater: Mapped["Theater"] = relationship(back_populates="seats")
-    tickets: Mapped[list["Ticket"]] = relationship("Ticket", back_populates="seat") 
+    tickets: Mapped["Ticket"] = relationship("Ticket", back_populates="seat") 

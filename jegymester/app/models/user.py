@@ -11,7 +11,7 @@ class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     phone: Mapped[str] = mapped_column(String(20), nullable=False)
-    password_hash: Mapped[str] = mapped_column(String(256))  # For hashed passwords
+    password_hash: Mapped[str] = mapped_column(String(256))
 
     roles: Mapped[List["Role"]] = relationship(
         secondary="userroles",
