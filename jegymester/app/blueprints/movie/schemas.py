@@ -1,0 +1,29 @@
+from marshmallow import Schema, fields
+from apiflask.fields import String, Email, Nested, Integer, List
+from apiflask.validators import Length, OneOf, Email
+from app.models.movie import Movie
+
+class MovieListSchema(Schema):
+    id = fields.Integer()
+    title = fields.String()
+    duration = fields.Integer()
+    genre = fields.String()
+    age_limit = fields.Integer()
+    description = fields.String()
+
+class MovieRequestSchema(Schema):
+    title = fields.String()
+    duration = fields.Integer()
+    genre = fields.String()
+    age_limit = fields.Integer()
+    description = fields.String()
+
+class MovieResponseSchema(Schema):
+    title = fields.String()
+    duration = fields.Integer()
+    genre = fields.String()
+    age_limit = fields.Integer()
+    description = fields.String()
+
+class MovieDeleteSchema(Schema):
+    id = fields.Integer()

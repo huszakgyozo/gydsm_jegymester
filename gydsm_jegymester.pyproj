@@ -37,11 +37,21 @@
     <Folder Include="jegymester\" />
     <Folder Include="jegymester\app\" />
     <Folder Include="jegymester\app\blueprints\" />
+    <Folder Include="jegymester\app\blueprints\movie\" />
+    <Folder Include="jegymester\app\blueprints\screening\" />
     <Folder Include="jegymester\app\blueprints\user\" />
     <Folder Include="jegymester\app\models\" />
     <Folder Include="jegymester\app\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="jegymester\app\blueprints\movie\routes.py" />
+    <Compile Include="jegymester\app\blueprints\movie\schemas.py" />
+    <Compile Include="jegymester\app\blueprints\movie\service.py" />
+    <Compile Include="jegymester\app\blueprints\movie\__init__.py" />
+    <Compile Include="jegymester\app\blueprints\screening\routes.py" />
+    <Compile Include="jegymester\app\blueprints\screening\schemas.py" />
+    <Compile Include="jegymester\app\blueprints\screening\service.py" />
+    <Compile Include="jegymester\app\blueprints\screening\__init__.py" />
     <Compile Include="jegymester\app\extensions.py" />
     <Compile Include="jegymester\app\blueprints\__init__.py" />
     <Compile Include="jegymester\app\models\movie.py" />
