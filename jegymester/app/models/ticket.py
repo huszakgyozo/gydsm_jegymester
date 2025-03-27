@@ -19,3 +19,4 @@ class Ticket(db.Model):
     user: Mapped["User"] = relationship(back_populates="tickets")
     ticketcategory: Mapped["TicketCategory"] = relationship(back_populates="tickets")
     seat: Mapped["Seat"] = relationship("Seat", back_populates="tickets")
+    ticket_orders: Mapped[list["TicketOrder"]] = relationship(back_populates="ticket")
