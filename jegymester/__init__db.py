@@ -11,7 +11,7 @@ from app.models.theater import Theater
 from app.models.seat import Seat
 from app.models.screening import Screening
 from app.models.ticketcategory import TicketCategory
-from app.models.order import Order
+from app.models.order import Order, StatusEnum
 from app.models.ticket import Ticket
 from app.models.ticketorder import TicketOrder
 
@@ -124,10 +124,14 @@ try:
     theater1 = Theater.query.filter_by(theatname="Főterem").first()
     theater2 = Theater.query.filter_by(theatname="Kisterem").first()
     if not Seat.query.filter_by(theater_id=theater1.id, seat_number="A1").first():
-        db.session.add_all([
-            Seat(theater_id=theater1.id, seat_number="A1"),
-            Seat(theater_id=theater1.id, seat_number="A2"),
-            Seat(theater_id=theater2.id, seat_number="B1")
+        db.session.add_all([ 
+            Seat(theater_id=theater1.id, seat_number=f"{row}{i}")
+            for row in ["A", "B", "C"]
+            for i in range(1, 21)
+        ] + [
+            Seat(theater_id=theater2.id, seat_number=f"{row}{i}")
+            for row in ["A", "B", "C"]
+            for i in range(1, 11)
         ])
         db.session.commit()
 
@@ -158,8 +162,8 @@ try:
         db.session.commit()
 
     # Orders
-    if not Order.query.filter_by(payment_status="Pending").first():
-        order = Order(payment_status="Pending")
+    if not Order.query.filter_by(payment_status=StatusEnum.Succesful).first():
+        order = Order(payment_status=StatusEnum.Succesful)
         db.session.add(order)
         db.session.commit()
 
@@ -180,27 +184,27 @@ try:
             db.session.commit()
 
     # TicketOrder (junction table)
-    order = Order.query.filter_by(payment_status="Pending").first()
+    order = Order.query.filter_by(payment_status=StatusEnum.Succesful).first()
     ticket1 = Ticket.query.filter_by(screening_id=screening1.id).first()
     ticket2 = Ticket.query.filter_by(screening_id=screening2.id).first()
     if not TicketOrder.query.filter_by(ticket_id=ticket1.id).first():
-        order.tickets.append(TicketOrder(ticket_id=ticket1.id, ticket_status="aktív"))
-        order.tickets.append(TicketOrder(ticket_id=ticket2.id, ticket_status="aktív"))
+        order.tickets.append(TicketOrder(ticket_id=ticket1.id,ticket_active=1))
+        order.tickets.append(TicketOrder(ticket_id=ticket2.id,ticket_active=1))
         db.session.commit()
 
     # Example queries to verify data
-    movie = Movie.query.get(1)
+    movie = Movie.query.first()
     print(f"Movie: {movie.title}, Duration: {movie.duration}")
 
-    theater = Theater.query.get(1)
+    theater = Theater.query.first()
     print(f"Theater: {theater.theatname}")
     for seat in theater.seats:
         print(f"Seat: {seat.seat_number}")
 
-    screening = Screening.query.get(1)
+    screening = Screening.query.first()
     print(f"Screening: {screening.movie.title} at {screening.start_time}")
 
-    ticket = Ticket.query.get(1)
+    ticket = Ticket.query.first()
     print(f"Ticket for: {ticket.screening.movie.title}, Category: {ticket.ticketcategory.catname}")
 
 except Exception as e:

@@ -14,6 +14,7 @@ class Screening(db.Model):
     movie_id: Mapped[int] = mapped_column(ForeignKey("movies.id"))
     theater_id: Mapped[int] = mapped_column(ForeignKey("theaters.id"))
     start_time: Mapped[datetime] = mapped_column(DateTime)
+    deleted : Mapped[bool] = mapped_column(default = False)
 
     movie: Mapped["Movie"] = relationship(back_populates="screenings")
     theater: Mapped["Theater"] = relationship(back_populates="screenings")

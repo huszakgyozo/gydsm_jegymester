@@ -5,11 +5,19 @@ from app.models.screening import Screening
 
 from sqlalchemy import null, select, and_
 
+
 class ScreeningService:
     @staticmethod
     def screening_list_all():
-        screenings = db.session.execute(select(Screening)).scalars().all()
+        screenings = db.session.execute(select(Screening)).scalars()
         return True, ScreeningListSchema().dump(screenings, many=True)
+
+    @staticmethod
+    def screening_list_active():
+        screenings = db.session.execute(select(Screening).filter(
+            Screening.deleted.is_(0))).scalars()
+        return True, ScreeningListSchema().dump(screenings, many=True)
+    
 
     @staticmethod
     def screening_get_item(id):
@@ -50,7 +58,7 @@ class ScreeningService:
             if not screening:
                 return False, "A vetítés nem található!"
             elif screening:
-                db.session.delete(screening)
+                screening.deleted = 1
                 db.session.commit()
                 return True, "Az adott vetítés törölve."
 

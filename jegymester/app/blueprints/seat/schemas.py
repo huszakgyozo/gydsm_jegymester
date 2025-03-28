@@ -18,7 +18,6 @@ class SeatRequestSchema(Schema):
 
 
 class SeatResponseSchema(Schema):
-    theater_id = fields.Integer()
     seat_number = fields.String()
     reserved = fields.Boolean()
 

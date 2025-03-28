@@ -14,5 +14,6 @@ class Movie(db.Model):
     genre: Mapped[str] = mapped_column(String(50))
     age_limit: Mapped[int] = mapped_column(Integer)
     description: Mapped[str] = mapped_column(String(500))
+    deleted : Mapped[bool] = mapped_column(default = False)
 
     screenings: Mapped[List["Screening"]] = relationship(back_populates="movie")

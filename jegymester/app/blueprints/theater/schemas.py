@@ -26,3 +26,6 @@ class TheaterUpdateSchema(Schema):
     theatname = fields.String()
 
 
+class TheaterToSeatSchema(Schema):
+    theatname = fields.String()
+    seats = fields.Nested('SeatResponseSchema', many=True)
