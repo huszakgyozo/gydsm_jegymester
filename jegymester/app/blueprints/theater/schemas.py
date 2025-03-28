@@ -1,0 +1,28 @@
+﻿from marshmallow import Schema, fields
+from apiflask.fields import String, Email, Nested, Integer, List
+from apiflask.validators import Length, OneOf, Email
+from app.models.theater import Theater
+
+
+class TheaterListSchema(Schema):
+    id = fields.Integer()
+    theatname = fields.String()
+
+
+class TheaterRequestSchema(Schema):
+    theatname = fields.String()
+
+
+class TheaterResponseSchema(Schema):
+    theatname = fields.String()
+
+
+class TheaterDeleteSchema(Schema):
+    id = fields.Integer()
+
+
+class TheaterUpdateSchema(Schema):
+    id = fields.Integer()
+    theatname = fields.String()
+
+

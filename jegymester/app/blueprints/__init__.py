@@ -16,3 +16,9 @@ bp.register_blueprint(bp_movie, url_prefix='/movie')
 
 from app.blueprints.screening import bp as bp_screening
 bp.register_blueprint(bp_screening, url_prefix='/screening')
+
+from app.blueprints.seat import bp as bp_seat
+bp.register_blueprint(bp_seat, url_prefix='/seat')
+
+from app.blueprints.theater import bp as bp_theater
+bp.register_blueprint(bp_theater, url_prefix='/theater')

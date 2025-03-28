@@ -11,9 +11,9 @@ from datetime import datetime
 class Screening(db.Model):
     __tablename__ = "screenings"
     id: Mapped[int] = mapped_column(primary_key=True)
-    movie_id: Mapped[int] = mapped_column(ForeignKey("movies.id"), nullable=False)
-    theater_id: Mapped[int] = mapped_column(ForeignKey("theaters.id"), nullable=False)
-    start_time: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    movie_id: Mapped[int] = mapped_column(ForeignKey("movies.id"))
+    theater_id: Mapped[int] = mapped_column(ForeignKey("theaters.id"))
+    start_time: Mapped[datetime] = mapped_column(DateTime)
 
     movie: Mapped["Movie"] = relationship(back_populates="screenings")
     theater: Mapped["Theater"] = relationship(back_populates="screenings")

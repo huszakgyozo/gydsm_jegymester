@@ -1,5 +1,5 @@
-from app.extensions import db
-from jegymester.app.blueprints.movie.schemas import *
+﻿from app.extensions import db
+from app.blueprints.movie.schemas import *
 
 from app.models.movie import Movie
 

@@ -9,15 +9,14 @@ from sqlalchemy.types import String
 class User(db.Model):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    phone: Mapped[str] = mapped_column(String(20), nullable=False)
+    email: Mapped[str] = mapped_column(String(120), unique=True)
+    phone: Mapped[str] = mapped_column(String(20))
     password_hash: Mapped[str] = mapped_column(String(256))
 
     roles: Mapped[List["Role"]] = relationship(
-        secondary="userroles",
-        back_populates="users"
+        secondary="userroles",  back_populates="users"
     )
-    tickets: Mapped[List["Ticket"]] = relationship(back_populates="user")
+    tickets: Mapped[List["Ticket"]] = relationship( back_populates="user")
 
     def set_password(self, password: str) -> None:
         self.password_hash = generate_password_hash(password)

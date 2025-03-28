@@ -1,9 +1,9 @@
-from app.blueprints.movie import bp
+﻿from app.blueprints.movie import bp
 from apiflask.fields import String, Integer
 from apiflask import HTTPError
 
-from jegymester.app.blueprints.movie.schemas import *
-from jegymester.app.blueprints.movie.service import MovieService
+from app.blueprints.movie.schemas import *
+from app.blueprints.movie.service import MovieService
 
 @bp.route('/')
 def index():

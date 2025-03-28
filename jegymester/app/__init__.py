@@ -1,4 +1,4 @@
-from flask import Flask
+﻿from flask import Flask
 from config import Config
 from app.extensions import db
 from apiflask import APIFlask
@@ -12,7 +12,7 @@ def create_app(config_class=Config):
 
     # API-k kiprobalasahoz
     app = APIFlask(__name__, json_errors=True,
-                   title="Netpincer API",
+                   title="Jegymester API",
                    docs_path="/swagger")
     app.config.from_object(config_class)
 

@@ -9,7 +9,7 @@ from sqlalchemy.types import String
 class Role(db.Model):
     __tablename__ = "roles"
     id: Mapped[int] = mapped_column(primary_key=True)
-    rolename: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
+    rolename: Mapped[str] = mapped_column(String(50), unique=True)
 
     users: Mapped[List["User"]] = relationship(
         secondary="userroles",

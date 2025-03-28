@@ -9,6 +9,6 @@ from sqlalchemy.types import String
 class Order(db.Model):
     __tablename__ = "orders"
     id: Mapped[int] = mapped_column(primary_key=True)
-    payment_status: Mapped[str] = mapped_column(String(20), nullable=False, default="Pending")
+    payment_status: Mapped[str] = mapped_column(String(20), default="Pending")
 
     tickets: Mapped[List["TicketOrder"]] = relationship(back_populates="order")

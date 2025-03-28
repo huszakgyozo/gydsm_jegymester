@@ -9,7 +9,7 @@ from sqlalchemy.types import String
 class Theater(db.Model):
     __tablename__ = "theaters"
     id: Mapped[int] = mapped_column(primary_key=True)
-    theatname: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
+    theatname: Mapped[str] = mapped_column(String(100), unique=True)
 
     seats: Mapped[List["Seat"]] = relationship(back_populates="theater")
-    screenings: Mapped[List["Screening"]] = relationship(back_populates="theater")
+    screenings: Mapped[List["Screening"]] = relationship("Screening",  back_populates="theater")

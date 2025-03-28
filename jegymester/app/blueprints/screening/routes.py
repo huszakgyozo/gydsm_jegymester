@@ -1,9 +1,9 @@
-from app.blueprints.screening import bp
+﻿from app.blueprints.screening import bp
 from apiflask.fields import String, Integer
 from apiflask import HTTPError
 
-from jegymester.app.blueprints.screening.schemas import *
-from jegymester.app.blueprints.screening.service import ScreeningService
+from app.blueprints.screening.schemas import *
+from app.blueprints.screening.service import ScreeningService
 
 @bp.route('/')
 def index():

@@ -9,7 +9,7 @@ from sqlalchemy.types import String, Integer
 class TicketCategory(db.Model):
     __tablename__ = "ticketcategories"
     id: Mapped[int] = mapped_column(primary_key=True)
-    catname: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
-    price: Mapped[int] = mapped_column(Integer, nullable=False)
+    catname: Mapped[str] = mapped_column(String(50), unique=True)
+    price: Mapped[int] = mapped_column(Integer)
 
-    tickets: Mapped[List["Ticket"]] = relationship(back_populates="ticketcategory")
+    tickets: Mapped[List["Ticket"]] = relationship( back_populates="ticketcategory")

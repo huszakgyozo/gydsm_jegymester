@@ -1,5 +1,5 @@
-from app.extensions import db
-from jegymester.app.blueprints.screening.schemas import *
+﻿from app.extensions import db
+from app.blueprints.screening.schemas import *
 
 from app.models.screening import Screening
 
