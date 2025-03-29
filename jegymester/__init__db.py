@@ -162,8 +162,8 @@ try:
         db.session.commit()
 
     # Orders
-    if not Order.query.filter_by(payment_status=StatusEnum.Succesful).first():
-        order = Order(payment_status=StatusEnum.Succesful)
+    if not Order.query.filter_by(payment_status=StatusEnum.Successful).first():
+        order = Order(payment_status=StatusEnum.Successful)
         db.session.add(order)
         db.session.commit()
 
@@ -184,7 +184,7 @@ try:
             db.session.commit()
 
     # TicketOrder (junction table)
-    order = Order.query.filter_by(payment_status=StatusEnum.Succesful).first()
+    order = Order.query.filter_by(payment_status=StatusEnum.Successful).first()
     ticket1 = Ticket.query.filter_by(screening_id=screening1.id).first()
     ticket2 = Ticket.query.filter_by(screening_id=screening2.id).first()
     if not TicketOrder.query.filter_by(ticket_id=ticket1.id).first():

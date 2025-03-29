@@ -7,8 +7,8 @@ from sqlalchemy.types import String
 
 
 class StatusEnum(enum.Enum):
-    Pending = 0,
-    Successful = 1,
+    Pending = 0
+    Successful = 1
     Canceled = 2
 
 
