@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 13b311f91c51
+Revision ID: beccc20c1e18
 Revises: 
-Create Date: 2025-03-28 19:08:03.957156
+Create Date: 2025-03-29 22:14:12.750665
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '13b311f91c51'
+revision = 'beccc20c1e18'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,12 +25,14 @@ def upgrade():
     sa.Column('genre', sa.String(length=50), nullable=False),
     sa.Column('age_limit', sa.Integer(), nullable=False),
     sa.Column('description', sa.String(length=500), nullable=False),
+    sa.Column('deleted', sa.Boolean(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('title')
     )
     op.create_table('orders',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('payment_status', sa.String(length=20), nullable=False),
+    sa.Column('payment_status', sa.Enum('Pending', 'Successful', 'Canceled', name='statusenum'), nullable=False),
+    sa.Column('deleted', sa.Boolean(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('roles',
@@ -41,7 +43,7 @@ def upgrade():
     )
     op.create_table('theaters',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('theatname', sa.String(length=100), nullable=True),
+    sa.Column('theatname', sa.String(length=100), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('theatname')
     )
@@ -65,6 +67,7 @@ def upgrade():
     sa.Column('movie_id', sa.Integer(), nullable=False),
     sa.Column('theater_id', sa.Integer(), nullable=False),
     sa.Column('start_time', sa.DateTime(), nullable=False),
+    sa.Column('deleted', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['movie_id'], ['movies.id'], ),
     sa.ForeignKeyConstraint(['theater_id'], ['theaters.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -99,7 +102,7 @@ def upgrade():
     op.create_table('ticketorders',
     sa.Column('order_id', sa.Integer(), nullable=False),
     sa.Column('ticket_id', sa.Integer(), nullable=False),
-    sa.Column('ticket_status', sa.String(length=20), nullable=False),
+    sa.Column('ticket_active', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['order_id'], ['orders.id'], ),
     sa.ForeignKeyConstraint(['ticket_id'], ['tickets.id'], ),
     sa.PrimaryKeyConstraint('order_id', 'ticket_id')

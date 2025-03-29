@@ -7,7 +7,7 @@ if not exist "..\env" (
 
 call ..\env\Scripts\activate
 
-
+flask db init
 flask db migrate
 flask db upgrade
 
