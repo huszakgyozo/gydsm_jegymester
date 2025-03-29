@@ -17,15 +17,6 @@ class TheaterResponseSchema(Schema):
     theatname = fields.String()
 
 
-class TheaterDeleteSchema(Schema):
-    id = fields.Integer()
-
-
-class TheaterUpdateSchema(Schema):
-    id = fields.Integer()
-    theatname = fields.String()
-
-
 class TheaterToSeatSchema(Schema):
     theatname = fields.String()
     seats = fields.Nested('SeatResponseSchema', many=True)

@@ -22,10 +22,6 @@ class SeatResponseSchema(Schema):
     reserved = fields.Boolean()
 
 
-class SeatDeleteSchema(Schema):
-    id = fields.Integer()
-
-
 class SeatUpdateSchema(Schema):
     theater_id = fields.Integer()
     seat_number = fields.String()

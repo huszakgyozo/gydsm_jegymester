@@ -20,17 +20,6 @@ class SeatService:
         return True, SeatResponseSchema().dump(seat)
 
     @staticmethod
-    def seat_add(request):
-        try:
-            seat = Seat(**request)
-            db.session.add(seat)
-            db.session.commit()
-
-        except Exception as ex:
-            return False, "seat_add() hiba!"
-        return True, SeatResponseSchema().dump(seat)
-
-    @staticmethod
     def seat_update(id, request):
         try:
             seat = db.session.get(Seat, id)
@@ -43,17 +32,4 @@ class SeatService:
             return False, "seat_update() hiba!"
         return True, SeatResponseSchema().dump(seat)
 
-    @staticmethod
-    def seat_delete(id):
-        try:
-            seat = db.session.get(Seat, id)
-            if not seat:
-                return False, "A szék nem található!"
-            elif seat:
-                db.session.delete(seat)
-                db.session.commit()
-                return True, "Az adott szék törölve."
-        except Exception as ex:
-            return False, "seat_delete() hiba!"
-        return True, "OK"
 

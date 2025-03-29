@@ -29,29 +29,11 @@ def seat_get_item(id):
     raise HTTPError(message=response, status_code=400)
 
 
-@bp.post('/add/')
-@bp.input(SeatRequestSchema, location="json")
-@bp.output(SeatResponseSchema)
-def seat_add_new(json_data):
-    success, response = SeatService.seat_add(json_data)
-    if success:
-        return response, 200
-    raise HTTPError(message=response, status_code=400)
-
-
 @bp.put('/update/<int:id>')
 @bp.input(SeatRequestSchema, location="json")
 @bp.output(SeatResponseSchema)
 def seat_update(id, json_data):
     success, response = SeatService.seat_update(id, json_data)
-    if success:
-        return response, 200
-    raise HTTPError(message=response, status_code=400)
-
-
-@bp.delete('/delete/<int:id>')
-def seat_delete(id):
-    success, response = SeatService.seat_delete(id)
     if success:
         return response, 200
     raise HTTPError(message=response, status_code=400)
