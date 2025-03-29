@@ -15,3 +15,5 @@ class TicketOrder(db.Model):
 
     order: Mapped["Order"] = relationship( back_populates="tickets")
     ticket: Mapped["Ticket"] = relationship( back_populates="ticket_orders")
+
+ 

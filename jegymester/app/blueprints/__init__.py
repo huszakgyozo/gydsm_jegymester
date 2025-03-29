@@ -22,3 +22,15 @@ bp.register_blueprint(bp_seat, url_prefix='/seat')
 
 from app.blueprints.theater import bp as bp_theater
 bp.register_blueprint(bp_theater, url_prefix='/theater')
+
+from app.blueprints.ticket import bp as bp_ticket
+bp.register_blueprint(bp_ticket, url_prefix='/ticket')
+
+from app.blueprints.ticketcategory import bp as bp_ticketcategory
+bp.register_blueprint(bp_ticketcategory, url_prefix='/ticketcategory')
+
+from app.blueprints.order import bp as bp_order
+bp.register_blueprint(bp_order, url_prefix='/order')
+
+from app.blueprints.ticketorder import bp as bp_ticketorder
+bp.register_blueprint(bp_ticketorder, url_prefix='/ticketorder')

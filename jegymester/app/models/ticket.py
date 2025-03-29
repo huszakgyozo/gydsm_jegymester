@@ -13,10 +13,13 @@ class Ticket(db.Model):
     screening_id: Mapped[int] = mapped_column(ForeignKey("screenings.id"))
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     ticketcategory_id: Mapped[int] = mapped_column(ForeignKey("ticketcategories.id"))
-    seat_id: Mapped[int] = mapped_column(ForeignKey("seats.id"))
+   
+    seat_id: Mapped[int] = mapped_column(ForeignKey("seats.id"))  # nem kell, majd később kiszedjük, de join condition hiba miatt kell
 
     screening: Mapped["Screening"] = relationship(back_populates="tickets")
     user: Mapped["User"] = relationship(back_populates="tickets")
     ticketcategory: Mapped["TicketCategory"] = relationship(back_populates="tickets")
     seat: Mapped["Seat"] = relationship("Seat", back_populates="tickets")
     ticket_orders: Mapped[list["TicketOrder"]] = relationship(back_populates="ticket")
+
+    
