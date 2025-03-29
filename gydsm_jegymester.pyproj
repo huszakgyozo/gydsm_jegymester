@@ -35,6 +35,7 @@
   <ItemGroup>
     <Content Include="jegymester\.flaskenv" />
     <Content Include="jegymester\app\blueprints\seat\__init__.py" />
+    <Content Include="jegymester\app_db_migrations.bat" />
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
