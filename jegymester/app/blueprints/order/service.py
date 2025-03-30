@@ -38,23 +38,16 @@ class OrderService:
                 # Validáljuk és konvertáljuk a payment_status értéket
                 order.payment_status = StatusEnum.validate(payment_status)
 
-                order.deleted = request.get("deleted", order.deleted)
+                order.deleted = request.get("deleted")
 
                 db.session.commit()
                 return True, order
             else:
-                return False, "Order not found"
-        except ValueError as ve:
-            # Ha érvénytelen a payment_status
-            db.session.rollback()
-            return False, str(ve)
-        except Exception as e:
-            db.session.rollback()
-            return False, str(e)
-            """ except Exception as ex:
+                return False, "Nincs ilyen order"
+        except Exception as ex:
             return False, "order_update() hiba!"
         return True, OrderResponseSchema().dump(order)
-            """
+            
     @staticmethod
     def order_delete(id):
         try:

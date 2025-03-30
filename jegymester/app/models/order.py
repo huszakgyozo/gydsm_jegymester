@@ -13,13 +13,11 @@ class StatusEnum(enum.Enum):
 
     @staticmethod
     def validate(value):
-        """Validáljuk, hogy a bemeneti érték megfelelő enum érték-e"""
         if isinstance(value, str):
             if value not in StatusEnum.__members__:
-                raise ValueError(f"Invalid payment status: {value}. Must be one of: {', '.join([e.name for e in StatusEnum])}")
+                raise ValueError(f"Nem megfelelő payment_status: {value}. Elfogadott: {', '.join([e.name for e in StatusEnum])}")
             return StatusEnum[value]
-        
-        raise ValueError(f"Invalid payment status: {value}. Must be one of: {', '.join([e.name for e in StatusEnum])}")
+        raise ValueError(f"Nem megfelelő payment_status: {value}. Elfogadott: {', '.join([e.name for e in StatusEnum])}")
 
 class Order(db.Model):
     __tablename__ = "orders"

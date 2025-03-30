@@ -28,17 +28,6 @@ def ticket_reserved_list_all():
         return response, 200
     raise HTTPError(message=response, status_code=400)
 
-
-
-@bp.get('/get/<int:id>')
-@bp.output(TicketResponseSchema)
-def ticket_get_item(id):
-    success, response = TicketService.ticket_get_item(id)
-    if success:
-        return response, 200
-    raise HTTPError(message=response, status_code=400)
-
-
 @bp.post('/add/')
 @bp.input(TicketRequestSchema, location="json")
 @bp.output(TicketResponseSchema)
@@ -66,3 +55,10 @@ def ticket_delete(id):
         return response, 200
     raise HTTPError(message=response, status_code=400)
 
+@bp.get('/get/<int:id>')
+@bp.output(TicketToTicketOrder)
+def ticketorder_One_ticket(id):
+    success, response = TicketService.get_ticket(id)
+    if success:
+        return response, 200
+    raise HTTPError(message=response, status_code=400)

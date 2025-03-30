@@ -29,8 +29,8 @@ class TicketToSeatSchema(Schema):
     seats = fields.Nested('SeatResponseSchema', many=True)
 
 
-    #javítandó
 class TicketToTicketOrder(Schema):
-    ticket_id = fields.Integer()
-    ticket_orders = fields.Nested('TicketOrderToTicket')
-    # userből ticket, ticketből ticketorder, ticketorderből order ?
+    ticketcategory = fields.Nested('TicketCategoryResponseSchema')
+    seat = fields.Nested('SeatResponseSchema')
+    screening = fields.Nested('TicketMoviSchema')
+    ticket_orders = fields.Nested('TicketOrderToTicket', many=True)

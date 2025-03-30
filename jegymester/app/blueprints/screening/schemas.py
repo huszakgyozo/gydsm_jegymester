@@ -35,3 +35,8 @@ class ScreeningDeleteSchema(Schema):
 class ScreeningToTheaterSchema(Schema):
     start_time = fields.String()
     theater = fields.Nested('TheaterToSeatSchema')
+
+class TicketMoviSchema(Schema):
+     start_time = fields.String()
+     movie = fields.Nested('ScreeningMovieSchema')
+     theater = fields.Nested('TheaterResponseSchema')

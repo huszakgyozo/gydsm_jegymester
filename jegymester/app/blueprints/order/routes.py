@@ -19,15 +19,6 @@ def order_list_all():
         return response, 200
     raise HTTPError(message=response, status_code=400)
 
-@bp.get('/list_active')
-@bp.output(OrderListSchema(many=True))
-def order_list_active():
-    success, response = OrderService.order_list_active()
-    if success:
-        return response, 200
-    raise HTTPError(message=response, status_code=400)
-
-
 @bp.get('/get/<int:id>')
 @bp.output(OrderResponseSchema)
 def order_get_item(id):

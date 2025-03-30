@@ -19,10 +19,6 @@ class TicketOrderResponseSchema(Schema):
     order_id = fields.Integer() 
     ticket_id=fields.Integer() 
 
-    #javítandó
 class TicketOrderToTicket(Schema):
-    #order = fields.Nested('OrderToTicketOrder')
     ticket_active = fields.Bool()
-    order_id = fields.Integer()
-    ticket_id=fields.Integer() 
     

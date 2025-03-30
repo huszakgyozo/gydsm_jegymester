@@ -13,13 +13,6 @@ class TicketOrderService:
         return True, TicketOrderListSchema().dump(ticketorders, many=True)
 
     @staticmethod
-    def ticketorder_get_item(id):
-        ticketorder = db.session.get(TicketOrder, id)
-        if not ticketorder:
-            return False, "A rendelés nem található!"
-        return True, TicketOrderResponseSchema().dump(ticketorder)
-
-    @staticmethod
     def ticketorder_add(request):
         try:
             ticketorder = TicketOrder(**request)
@@ -56,12 +49,3 @@ class TicketOrderService:
         except Exception as ex:
             return False, "ticketorder_delete() hiba!"
         return True, "OK"
-
-    
-    @staticmethod
-    def ticketorder_ticket(id1, id2):
-        ticket = db.session.get(TicketOrder, (id1, id2))
-        if not ticket:
-            return False, "A jegy nem található!"
-        return True, TicketOrderToTicket().dump(ticket)
-   

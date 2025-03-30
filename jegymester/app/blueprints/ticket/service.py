@@ -50,3 +50,10 @@ class TicketService:
         except Exception as ex:
             return False, "ticket_update() hiba!"
         return True, TicketResponseSchema().dump(ticket)
+    
+    @staticmethod
+    def get_ticket(id):
+        ticket = db.session.get(Ticket, id)
+        if not ticket:
+            return False, "get_ticket() hiba!"
+        return True, TicketToTicketOrder().dump(ticket)
