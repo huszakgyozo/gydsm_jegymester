@@ -34,3 +34,10 @@ bp.register_blueprint(bp_order, url_prefix='/order')
 
 from app.blueprints.ticketorder import bp as bp_ticketorder
 bp.register_blueprint(bp_ticketorder, url_prefix='/ticketorder')
+
+from app.blueprints.role import bp as bp_role
+bp.register_blueprint(bp_role, url_prefix='/role')
+from app.blueprints.user import bp as bp_user
+bp.register_blueprint(bp_user, url_prefix='/user')
+from app.blueprints.userrole import bp as bp_userrole
+bp.register_blueprint(bp_userrole, url_prefix='/userrole')

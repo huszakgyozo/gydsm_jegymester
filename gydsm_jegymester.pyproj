@@ -44,6 +44,8 @@
     <Folder Include="jegymester\app\" />
     <Folder Include="jegymester\app\blueprints\" />
     <Folder Include="jegymester\app\blueprints\movie\" />
+    <Folder Include="jegymester\app\blueprints\userrole\" />
+    <Folder Include="jegymester\app\blueprints\role\" />
     <Folder Include="jegymester\app\blueprints\ticketorder\" />
     <Folder Include="jegymester\app\blueprints\order\" />
     <Folder Include="jegymester\app\blueprints\ticketcategory\" />
@@ -64,6 +66,10 @@
     <Compile Include="jegymester\app\blueprints\order\schemas.py" />
     <Compile Include="jegymester\app\blueprints\order\service.py" />
     <Compile Include="jegymester\app\blueprints\order\__init__.py" />
+    <Compile Include="jegymester\app\blueprints\role\routes.py" />
+    <Compile Include="jegymester\app\blueprints\role\schemas.py" />
+    <Compile Include="jegymester\app\blueprints\role\service.py" />
+    <Compile Include="jegymester\app\blueprints\role\__init__.py" />
     <Compile Include="jegymester\app\blueprints\screening\routes.py" />
     <Compile Include="jegymester\app\blueprints\screening\schemas.py" />
     <Compile Include="jegymester\app\blueprints\screening\service.py" />
@@ -86,6 +92,14 @@
     <Compile Include="jegymester\app\blueprints\ticket\routes.py" />
     <Compile Include="jegymester\app\blueprints\ticket\schemas.py" />
     <Compile Include="jegymester\app\blueprints\ticket\service.py" />
+    <Compile Include="jegymester\app\blueprints\userrole\routes.py" />
+    <Compile Include="jegymester\app\blueprints\userrole\schemas.py" />
+    <Compile Include="jegymester\app\blueprints\userrole\service.py" />
+    <Compile Include="jegymester\app\blueprints\userrole\__init__.py" />
+    <Compile Include="jegymester\app\blueprints\user\routes.py" />
+    <Compile Include="jegymester\app\blueprints\user\schemas.py" />
+    <Compile Include="jegymester\app\blueprints\user\service.py" />
+    <Compile Include="jegymester\app\blueprints\user\__init__.py" />
     <Compile Include="jegymester\app\extensions.py" />
     <Compile Include="jegymester\app\blueprints\__init__.py" />
     <Compile Include="jegymester\app\models\movie.py" />
