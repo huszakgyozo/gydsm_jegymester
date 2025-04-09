@@ -15,6 +15,7 @@ class UserResponseSchema(Schema):
     id = fields.Integer()
     email = fields.String()
     phone = fields.String()
+    token = fields.String()
 
 class UserLoginSchema(Schema):
     email = String(validate=Email(), required=True)
@@ -26,4 +27,11 @@ class UserListSchema(Schema):
     phone = fields.String()
     tickets = fields.Nested('TicketResponseSchema', many=True)
 
-    
+class RoleSchema(Schema):
+    id = fields.Integer()
+    name = fields.String()
+
+class PayloadSchema(Schema):
+    id = fields.Integer()
+    roles  = fields.List(fields.Nested(RoleSchema))
+    exp = fields.Integer()
