@@ -6,6 +6,9 @@ from apiflask import HTTPError
 from app.blueprints.userrole.schemas import *
 from app.blueprints.userrole.service import UserroleService
 from jegymester.app.blueprints.userrole.schemas import UserroleListSchema, UserroleRequestSchema, UserroleResponseSchema, UserroleUpdateSchema
+from app.extensions import auth
+from app.blueprints import role_required
+
 
 # ma
 
@@ -15,6 +18,8 @@ def index():
 
 @bp.get('/list_all')
 @bp.output(UserroleListSchema(many=True))
+@bp.auth_required(auth)
+@role_required([1])
 def userrole_list_all():
     success, response = UserroleService.userrole_list_all()
     if success:
@@ -24,6 +29,8 @@ def userrole_list_all():
 
 @bp.get('/get/<int:id>')
 @bp.output(UserroleResponseSchema)
+@bp.auth_required(auth)
+@role_required([1])
 def userrole_get_item(id):
     success, response = UserroleService.userrole_get_item(id)
     if success:
@@ -34,6 +41,8 @@ def userrole_get_item(id):
 @bp.post('/add/')
 @bp.input(UserroleRequestSchema, location="json")
 @bp.output(UserroleResponseSchema)
+@bp.auth_required(auth)
+@role_required([1])
 def userrole_add_new(json_data):
     success, response = UserroleService.userrole_add(json_data)
     if success:
@@ -44,6 +53,8 @@ def userrole_add_new(json_data):
 @bp.put('/update/<int:id>')
 @bp.input(UserroleUpdateSchema, location="json")
 @bp.output(UserroleResponseSchema)
+@bp.auth_required(auth)
+@role_required([1])
 def userrole_update(id, json_data):
     success, response = UserroleService.userrole_update(id, json_data)
     if success:
@@ -52,6 +63,8 @@ def userrole_update(id, json_data):
 
 
 @bp.delete('/delete/<int:id>')
+@bp.auth_required(auth)
+@role_required([1])
 def userrole_delete(id):
     success, response = UserroleService.userrole_delete(id)
     if success:

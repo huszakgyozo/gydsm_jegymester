@@ -14,6 +14,8 @@ def index():
 
 @bp.get('/list/')
 @bp.output(SeatListSchema(many=True))
+@bp.auth_required(auth)
+@role_required([1])
 def seat_list_all():
     success, response = SeatService.seat_list_all()
     if success:
@@ -23,6 +25,8 @@ def seat_list_all():
 
 @bp.get('/get/<int:id>')
 @bp.output(SeatResponseSchema)
+@bp.auth_required(auth)
+@role_required([1])
 def seat_get_item(id):
     success, response = SeatService.seat_get_item(id)
     if success:
@@ -33,6 +37,8 @@ def seat_get_item(id):
 @bp.put('/update/<int:id>')
 @bp.input(SeatRequestSchema, location="json")
 @bp.output(SeatResponseSchema)
+@bp.auth_required(auth)
+@role_required([1])
 def seat_update(id, json_data):
     success, response = SeatService.seat_update(id, json_data)
     if success:

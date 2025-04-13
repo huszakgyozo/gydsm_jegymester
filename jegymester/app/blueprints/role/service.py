@@ -3,16 +3,18 @@ from app.blueprints.role.schemas import *
 
 from app.models.role import Role
 from sqlalchemy import delete, null, select, and_
+
+from app.models.userrole import UserRole
 #ma
 class RoleService:
     @staticmethod
     def role_list_all():
         role = db.session.execute(select(Role)).scalars()
         return True, RoleListSchema().dump(role, many=True)
-
+    #a 17.sorban a role javitasra szorul, berozsdásodott:(
     @staticmethod
     def role_get_item(id):
-        role = db.session.get(role, id)
+        role = db.session.get(Role, id)
         if not role:
             return False, "A szerepkör nem található!"
         return True, RoleResponseSchema().dump(role)
@@ -62,4 +64,12 @@ class RoleService:
         except Exception as ex:
             return False, "role_delete() hiba!"
         return True, "OK"
-    
+    #nemjo
+    @staticmethod
+    def list_user_roles(user_id):
+        try:
+            role = db.session.execute(
+                select(Role).filter(UserRole.user_id == user_id)).scalars()
+            return True, RoleListSchema().dump(role, many=True)
+        except Exception as ex:
+            return False, "user_list_user_roles() hiba!"

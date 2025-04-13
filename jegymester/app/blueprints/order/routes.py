@@ -14,6 +14,8 @@ def index():
 
 @bp.get('/list_all')
 @bp.output(OrderListSchema(many=True))
+@bp.auth_required(auth)
+@role_required([1,2,3])
 def order_list_all():
     success, response = OrderService.order_list_all()
     if success:
@@ -22,6 +24,8 @@ def order_list_all():
 
 @bp.get('/get/<int:id>')
 @bp.output(OrderResponseSchema)
+@bp.auth_required(auth)
+@role_required([1,3])
 def order_get_item(id):
     success, response = OrderService.order_get_item(id)
     if success:
@@ -32,6 +36,8 @@ def order_get_item(id):
 @bp.put('/update/<int:id>')
 @bp.input(OrderUpdateSchema, location="json")
 @bp.output(OrderResponseSchema)
+@bp.auth_required(auth)
+@role_required([1,3])
 def order_update(id, json_data):
     success, response = OrderService.order_update(id, json_data)
     if success:
@@ -40,6 +46,8 @@ def order_update(id, json_data):
 
 
 @bp.delete('/delete/<int:id>')
+@bp.auth_required(auth)
+@role_required([1,2,3])
 def order_delete(id):
     success, response = OrderService.order_delete(id)
     if success:
