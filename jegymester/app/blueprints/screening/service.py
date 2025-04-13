@@ -4,7 +4,7 @@ from app.blueprints.screening.schemas import *
 from app.models.screening import Screening
 
 from sqlalchemy import null, select, and_
-
+from datetime import datetime
 
 class ScreeningService:
     @staticmethod
@@ -34,7 +34,7 @@ class ScreeningService:
             db.session.commit()
 
         except Exception as ex:
-            return False, "screening_add() hiba!"
+            return False, "screening_add() hiba!"+str(ex)
         return True, ScreeningResponseSchema().dump(screening)
 
     @staticmethod
@@ -44,11 +44,12 @@ class ScreeningService:
             if screening:
                 screening.movie_id = request["movie_id"]
                 screening.theater_id = request["theater_id"]
-                screening.start_time = request["start_time"]
+                screening.start_time = datetime.strptime(request["start_time"], "%Y-%m-%d %H:%M:%S")
+                screening.deleted = request["deleted"]
                 db.session.commit()
 
         except Exception as ex:
-            return False, "screening_update() hiba!"
+            return False, f"screening_update() hiba!{str(ex)}"
         return True, ScreeningResponseSchema().dump(screening)
 
     @staticmethod
@@ -63,5 +64,5 @@ class ScreeningService:
                 return True, "Az adott vetítés törölve."
 
         except Exception as ex:
-            return False, "screening_delete() hiba!"
+            return False, "screening_delete() hiba!"+str(ex)
         return True, "OK"

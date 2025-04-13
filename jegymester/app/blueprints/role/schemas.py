@@ -6,20 +6,16 @@ from app.models.role import Role
 #ma
 class RoleListSchema(Schema):
     id = fields.Integer()
-    role_name=fields.String()
-    deleted=fields.Bool()
+    rolename=fields.String()
 
 class RoleRequestSchema(Schema):
-    role_name=fields.String()
-    deleted=fields.Bool()
+    rolename=fields.String()
 
 class RoleResponseSchema(Schema):
-    role_name=fields.String()
-    deleted=fields.Bool()
+    rolename=fields.String()
 
 class RoleUpdateSchema(Schema):
-    role_name=fields.String()
-    deleted=fields.Bool()
+    rolename=fields.String()
 
 class RoleDeleteSchema(Schema):
     id = fields.String()

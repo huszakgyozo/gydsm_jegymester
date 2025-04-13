@@ -34,7 +34,7 @@ class TicketService:
             db.session.commit()
 
         except Exception as ex:
-            return False, "ticket_add() hiba!"
+            return False, "ticket_add() hiba!"+str(ex)
         return True, TicketResponseSchema().dump(ticket)
 
     @staticmethod
@@ -48,7 +48,7 @@ class TicketService:
                 db.session.commit()
 
         except Exception as ex:
-            return False, "ticket_update() hiba!"
+            return False, "ticket_update() hiba!"+str(ex)
         return True, TicketResponseSchema().dump(ticket)
     
     @staticmethod

@@ -13,29 +13,6 @@ class TicketOrderService:
         return True, TicketOrderListSchema().dump(ticketorders, many=True)
 
     @staticmethod
-    def ticketorder_add(request):
-        try:
-            ticketorder = TicketOrder(**request)
-            db.session.add(ticketorder)
-            db.session.commit()
-
-        except Exception as ex:
-            return False, "ticketorder_add() hiba!"
-        return True, TicketOrderResponseSchema().dump(ticketorder)
-
-    @staticmethod
-    def ticketorder_update(id, request):
-        try:
-            ticketorder = db.session.get(TicketOrder, id)
-            if ticketorder:
-            
-                db.session.commit()
-
-        except Exception as ex:
-            return False, "ticket_update() hiba!"
-        return True, TicketOrderResponseSchema().dump(ticketorder)
-
-    @staticmethod
     def ticketorder_delete(id):
         try:
             ticketorder = db.session.get(TicketOrder, id)
@@ -47,5 +24,5 @@ class TicketOrderService:
                 return True, "Az adott rendelés törölve."
 
         except Exception as ex:
-            return False, "ticketorder_delete() hiba!"
+            return False, "ticketorder_delete() hiba!"+str(ex)
         return True, "OK"

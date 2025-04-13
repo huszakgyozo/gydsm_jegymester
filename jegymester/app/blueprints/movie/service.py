@@ -33,7 +33,7 @@ class MovieService:
             db.session.commit()
 
         except Exception as ex:
-            return False, "movie_add() hiba!"
+            return False, "movie_add() hiba!"+str(ex)
         return True, MovieResponseSchema().dump(movie)
 
     @staticmethod
@@ -50,7 +50,7 @@ class MovieService:
                 db.session.commit()
 
         except Exception as ex:
-            return False, "movie_update() hiba!"
+            return False, "movie_update() hiba!"+str(ex)
         return True, MovieResponseSchema().dump(movie)
 
     @staticmethod
@@ -65,7 +65,7 @@ class MovieService:
                 return True, "Az adott film törölve."
 
         except Exception as ex:
-            return False, "movie_delete() hiba!"
+            return False, "movie_delete() hiba!"+str(ex)
         return True, "OK"
 
     @staticmethod

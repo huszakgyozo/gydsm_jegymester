@@ -16,6 +16,7 @@ from app.blueprints import role_required
 def index():
     return 'Userrole Blueprint'
 
+
 @bp.get('/list_all')
 @bp.output(UserroleListSchema(many=True))
 @bp.auth_required(auth)
@@ -50,23 +51,24 @@ def userrole_add_new(json_data):
     raise HTTPError(message=response, status_code=400)
 
 
-@bp.put('/update/<int:id>')
+@bp.put('/update/<int:olduserid><int:oldroleid>')
 @bp.input(UserroleUpdateSchema, location="json")
 @bp.output(UserroleResponseSchema)
 @bp.auth_required(auth)
 @role_required([1])
-def userrole_update(id, json_data):
-    success, response = UserroleService.userrole_update(id, json_data)
+def userrole_update(olduserid, oldroleid, json_data):
+    success, response = UserroleService.userrole_update(
+        olduserid, oldroleid, json_data)
     if success:
         return response, 200
     raise HTTPError(message=response, status_code=400)
 
 
-@bp.delete('/delete/<int:id>')
+@bp.delete('/delete/<int:userid><int:roleid>')
 @bp.auth_required(auth)
 @role_required([1])
-def userrole_delete(id):
-    success, response = UserroleService.userrole_delete(id)
+def userrole_delete(userid, roleid):
+    success, response = UserroleService.userrole_delete(userid, roleid)
     if success:
         return response, 200
     raise HTTPError(message=response, status_code=400)

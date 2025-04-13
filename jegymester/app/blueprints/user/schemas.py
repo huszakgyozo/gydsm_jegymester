@@ -4,12 +4,14 @@ from apiflask.validators import Email, Length
 from app.models.user import User
 from jegymester.app import models
 
-#ma
+# ma
+
 
 class UserRequestSchema(Schema):
     email = String(validate=Email(), required=True)
     password_hash = fields.String()
     phone = fields.String()
+
 
 class UserResponseSchema(Schema):
     id = fields.Integer()
@@ -17,9 +19,11 @@ class UserResponseSchema(Schema):
     phone = fields.String()
     token = fields.String()
 
+
 class UserLoginSchema(Schema):
     email = String(validate=Email(), required=True)
     password_hash = fields.String(required=True)
+
 
 class UserListSchema(Schema):
     id = fields.Integer()
@@ -27,11 +31,13 @@ class UserListSchema(Schema):
     phone = fields.String()
     tickets = fields.Nested('TicketResponseSchema', many=True)
 
+
 class RoleSchema(Schema):
     id = fields.Integer()
     name = fields.String()
 
+
 class PayloadSchema(Schema):
     id = fields.Integer()
-    roles  = fields.List(fields.Nested(RoleSchema))
+    roles = fields.List(fields.Nested(RoleSchema))
     exp = fields.Integer()

@@ -7,6 +7,7 @@ from app.blueprints.ticketorder.service import TicketOrderService
 from app.extensions import auth
 from app.blueprints import role_required
 
+
 @bp.route('/')
 def index():
     return 'TicketOrder Blueprint'
@@ -22,30 +23,8 @@ def ticketorder_list_all():
         return response, 200
     raise HTTPError(message=response, status_code=400)
 
-@bp.post('/add/')
-@bp.input(TicketOrderRequestSchema, location="json")
-@bp.output(TicketOrderResponseSchema)
-@bp.auth_required(auth)
-@role_required([1])
-def ticketorder_add_new(json_data):
-    success, response = TicketOrderService.ticketorder_add(json_data)
-    if success:
-        return response, 200
-    raise HTTPError(message=response, status_code=400)
 
-
-@bp.put('/update/<int:id>')
-@bp.input(TicketOrderRequestSchema, location="json")
-@bp.output(TicketOrderResponseSchema)
-@bp.auth_required(auth)
-@role_required([1])
-def ticketorder_update(id, json_data):
-    success, response = TicketOrderService.ticketorder_update(id, json_data)
-    if success:
-        return response, 200
-    raise HTTPError(message=response, status_code=400)
-
-#ha a jegy nem aktív, akkor delete
+# ha a jegy nem aktív, akkor delete
 @bp.delete('/delete/<int:id>')
 @bp.auth_required(auth)
 @role_required([1])
@@ -54,4 +33,3 @@ def ticketorder_delete(id):
     if success:
         return response, 200
     raise HTTPError(message=response, status_code=400)
-

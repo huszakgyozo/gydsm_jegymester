@@ -7,25 +7,26 @@ from app.models.ticket import Ticket
 class TicketListSchema(Schema):
     id = fields.Integer()
     screening_id = fields.Integer()
-    user_id=fields.Integer()
-    ticketcategory_id=fields.Integer()
-    
+    user_id = fields.Integer()
+    ticketcategory_id = fields.Integer()
+    seat_id = fields.Integer()
+
 
 class TicketRequestSchema(Schema):
     screening_id = fields.Integer()
-    user_id=fields.Integer() 
-    ticketcategory_id=fields.Integer()
-    
+    user_id = fields.Integer()
+    ticketcategory_id = fields.Integer()
+    seat_id = fields.Integer()
 
 
 class TicketResponseSchema(Schema):
     screening_id = fields.Integer()
-    ticketcategory_id=fields.Integer()
-    
+    ticketcategory_id = fields.Integer()
+
 
 class TicketToSeatSchema(Schema):
-    screening_id = fields.Integer() 
-    ticketcategory_id=fields.Integer()
+    screening_id = fields.Integer()
+    ticketcategory_id = fields.Integer()
     seats = fields.Nested('SeatResponseSchema', many=True)
 
 

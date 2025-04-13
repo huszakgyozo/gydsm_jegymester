@@ -14,6 +14,17 @@ def index():
     return 'Role Blueprint'
 
 
+@bp.post('/add/')
+@bp.input(RoleRequestSchema, location="json")
+@bp.auth_required(auth)
+@role_required([1])
+def role_add(json_data):
+    success, response = RoleService.role_add(json_data)
+    if success:
+        return response, 201
+    raise HTTPError(message=response, status_code=400)
+
+
 @bp.get('/list_all')
 @bp.output(RoleListSchema(many=True))
 @bp.auth_required(auth)
@@ -23,17 +34,6 @@ def role_list_all():
     if success:
         return response, 200
     raise HTTPError(message=response, status_code=400)
-
-@bp.get('/get/<int:id>')
-@bp.output(RoleResponseSchema)
-@bp.auth_required(auth)
-@role_required([1])
-def role_get_item(id):
-    success, response = RoleService.role_get_item(id)
-    if success:
-        return response, 200
-    raise HTTPError(message=response, status_code=400)
-
 
 @bp.put('/update/<int:id>')
 @bp.input(RoleUpdateSchema, location="json")

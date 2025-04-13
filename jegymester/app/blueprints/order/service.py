@@ -25,7 +25,7 @@ class OrderService:
             db.session.commit()
 
         except Exception as ex:
-            return False, "order_add() hiba!"
+            return False, "order_add() hiba!"+str(ex)
         return True, OrderResponseSchema().dump(order)
 
     @staticmethod
@@ -45,7 +45,7 @@ class OrderService:
             else:
                 return False, "Nincs ilyen order"
         except Exception as ex:
-            return False, "order_update() hiba!"
+            return False, "order_update() hiba!"+str(ex)
         return True, OrderResponseSchema().dump(order)
             
     @staticmethod
@@ -60,6 +60,6 @@ class OrderService:
                 return True, "Az adott megrendelés törölve."
 
         except Exception as ex:
-            return False, "order_delete() hiba!"
+            return False, "order_delete() hiba!"+str(ex)
         return True, "OK"
     

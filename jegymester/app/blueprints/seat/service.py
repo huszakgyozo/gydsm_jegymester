@@ -29,7 +29,7 @@ class SeatService:
                 seat.reserved = request["reserved"]
                 db.session.commit()
         except Exception as ex:
-            return False, "seat_update() hiba!"
+            return False, "seat_update() hiba!"+str(ex)
         return True, SeatResponseSchema().dump(seat)
 
 

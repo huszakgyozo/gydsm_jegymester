@@ -32,7 +32,7 @@ def ticketcategory_get_item(id):
 @bp.put('/update/<int:id>')
 @bp.auth_required(auth)
 @role_required([1])
-@bp.input(TicketCategoryUpdateSchema, location="json")
+@bp.input(TicketCategoryRequestSchema, location="json")
 @bp.output(TicketCategoryResponseSchema)
 def ticketcategory_update(id, json_data):
     success, response = TicketCategoryService.ticketcategory_update(id, json_data)

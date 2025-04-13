@@ -6,19 +6,21 @@ from app.models.ticketorder import TicketOrder
 
 class TicketOrderListSchema(Schema):
     order_id = fields.Integer()
-    ticket_id=fields.Integer() 
-    ticket_active=fields.Bool()
+    ticket_id = fields.Integer()
+    ticket_active = fields.Bool()
+
 
 class TicketOrderRequestSchema(Schema):
-    
-    ticket_active=fields.Bool()
+    ticket_active = fields.Bool()
+    order_id = fields.Integer()
+    ticket_id = fields.Integer()
 
 
 class TicketOrderResponseSchema(Schema):
-    ticket_active=fields.Bool()
-    order_id = fields.Integer() 
-    ticket_id=fields.Integer() 
+    ticket_active = fields.Bool()
+    order_id = fields.Integer()
+    ticket_id = fields.Integer()
+
 
 class TicketOrderToTicket(Schema):
     ticket_active = fields.Bool()
-    

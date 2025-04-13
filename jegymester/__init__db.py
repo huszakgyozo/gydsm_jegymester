@@ -33,14 +33,16 @@ try:
         db.session.add_all([
             Role(rolename="Admin"),
             Role(rolename="User"),
-            Role(rolename="Cashier")
+            Role(rolename="Cashier"),
+            Role(rolename="Guest")
         ])
         db.session.commit()
 
     # Test User
     if not User.query.filter_by(email="testuser@example.com").first():
         user = User(email="testuser@example.com", phone="+36123456789")
-        user.set_password("password123")  # Assumes set_password hashes the password
+        # Assumes set_password hashes the password
+        user.set_password("password123")
         db.session.add(user)
         db.session.commit()
 
@@ -124,7 +126,7 @@ try:
     theater1 = Theater.query.filter_by(theatname="Főterem").first()
     theater2 = Theater.query.filter_by(theatname="Kisterem").first()
     if not Seat.query.filter_by(theater_id=theater1.id, seat_number="A1").first():
-        db.session.add_all([ 
+        db.session.add_all([
             Seat(theater_id=theater1.id, seat_number=f"{row}{i}")
             for row in ["A", "B", "C"]
             for i in range(1, 21)
@@ -172,12 +174,16 @@ try:
     screening2 = Screening.query.filter_by(movie_id=movie2.id).first()
     adult_category = TicketCategory.query.filter_by(catname="Felnőtt").first()
     student_category = TicketCategory.query.filter_by(catname="Diák").first()
-    seat1 = Seat.query.filter_by(theater_id=screening1.theater_id, reserved=False).first()
-    seat2 = Seat.query.filter_by(theater_id=screening2.theater_id, reserved=False).first()
+    seat1 = Seat.query.filter_by(
+        theater_id=screening1.theater_id, reserved=False).first()
+    seat2 = Seat.query.filter_by(
+        theater_id=screening2.theater_id, reserved=False).first()
     if seat1 and seat2:
         if not Ticket.query.filter_by(screening_id=screening1.id, user_id=user.id).first():
-            ticket = Ticket(screening_id=screening1.id, user_id=user.id, ticketcategory_id=adult_category.id, seat_id=seat1.id)
-            ticket2 = Ticket(screening_id=screening2.id, user_id=user.id, ticketcategory_id=student_category.id, seat_id=seat2.id)
+            ticket = Ticket(screening_id=screening1.id, user_id=user.id,
+                            ticketcategory_id=adult_category.id, seat_id=seat1.id)
+            ticket2 = Ticket(screening_id=screening2.id, user_id=user.id,
+                             ticketcategory_id=student_category.id, seat_id=seat2.id)
             db.session.add_all([ticket, ticket2])
             seat1.reserved = True
             seat2.reserved = True
@@ -188,8 +194,10 @@ try:
     ticket1 = Ticket.query.filter_by(screening_id=screening1.id).first()
     ticket2 = Ticket.query.filter_by(screening_id=screening2.id).first()
     if not TicketOrder.query.filter_by(ticket_id=ticket1.id).first():
-        order.tickets.append(TicketOrder(ticket_id=ticket1.id,ticket_active=1))
-        order.tickets.append(TicketOrder(ticket_id=ticket2.id,ticket_active=1))
+        order.tickets.append(TicketOrder(
+            ticket_id=ticket1.id, ticket_active=1))
+        order.tickets.append(TicketOrder(
+            ticket_id=ticket2.id, ticket_active=1))
         db.session.commit()
 
     # Example queries to verify data
@@ -205,7 +213,8 @@ try:
     print(f"Screening: {screening.movie.title} at {screening.start_time}")
 
     ticket = Ticket.query.first()
-    print(f"Ticket for: {ticket.screening.movie.title}, Category: {ticket.ticketcategory.catname}")
+    print(
+        f"Ticket for: {ticket.screening.movie.title}, Category: {ticket.ticketcategory.catname}")
 
 except Exception as e:
     db.session.rollback()

@@ -7,7 +7,7 @@ from flask import current_app
 from authlib.jose import jwt
 from datetime import datetime
 from apiflask import HTTPError
-from functools import wraps #
+from functools import wraps
 
 bp = APIBlueprint('main', __name__, tag="default")
 

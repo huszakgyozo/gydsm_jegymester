@@ -38,15 +38,15 @@ def user_login(json_data):
         return response, 200
     raise HTTPError(message=response, status_code=400)
 
-#1 admin
-#2 user
-#3 cashier
-#4 guest
+# 1 admin
+# 2 user
+# 3 cashier
+# 4 guest
+
 
 @bp.get('/list_all')
 @bp.output(UserListSchema(many=True))
 @bp.auth_required(auth)
-
 @role_required([1])
 def user_list_all():
     success, response = UserService.user_list_all()

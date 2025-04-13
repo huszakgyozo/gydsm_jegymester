@@ -20,31 +20,42 @@ class UserroleService:
         userrole = db.session.get(UserRole, id)
         if not userrole:
             return False, "A userrole nem található!"
-        return True, UserroleResponseSchema().dump(userrole)
-
+        return True, UserroleListSchema().dump(userrole)
 
     @staticmethod
-    def userrole_update(id, request):
+    def userrole_update(olduser_id, oldrole_id, request):
         try:
-            userrole = db.session.get(UserRole, id)
+            userrole = db.session.get(UserRole, (olduser_id, oldrole_id))
             if userrole:
-                userrole.role_id = request.get("role_id", userrole.role_id)
-                # Ha további mezők frissítése szükséges, itt adhatóak hozzá
+                userrole.role_id = request["newrole_id"]
                 db.session.commit()
             else:
                 return False, "A userrole nem található!"
         except Exception as ex:
-            return False, "userrole_update() hiba!"
+            return False, "userrole_update() hiba!"+str(ex)
         return True, UserroleResponseSchema().dump(userrole)
 
     @staticmethod
-    def userrole_delete(id):
+    def userrole_delete(userid, roleid):
         try:
-            userrole = db.session.get(UserRole, id)
+            userrole = db.session.get(UserRole, (userid, roleid))
             if not userrole:
                 return False, "Userrole nem található!"
-            userrole.deleted = 1
+            db.session.delete(userrole)
             db.session.commit()
             return True, "Az adott userrole törölve."
         except Exception as ex:
-            return False, "userrole_delete() hiba!"
+            return False, "userrole_delete() hiba!"+str(ex)
+
+    @staticmethod
+    def userrole_add(request):
+        try:
+            userrole = UserRole(
+                user_id=request["user_id"],
+                role_id=request["role_id"]
+            )
+            db.session.add(userrole)
+            db.session.commit()
+        except Exception as ex:
+            return False, "userrole_add() hiba!"+str(ex)
+        return True, UserroleResponseSchema().dump(userrole)
