@@ -42,12 +42,11 @@ def user_login(json_data):
 @bp.get('/list_all')
 @bp.output(UserListSchema(many=True))
 @bp.auth_required(auth)
-#meg kell valósítani jelenleg role ID-val működik
 #1 admin
 #2 user
 #3 cashier
+#4 guest
 @role_required([1])
-#@role_required(["Admin"])
 def user_list_all():
     success, response = UserService.user_list_all()
     if success:
