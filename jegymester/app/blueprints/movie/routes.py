@@ -41,6 +41,8 @@ def movie_get_item(id):
 @bp.post('/add/')
 @bp.input(MovieRequestSchema, location="json")
 @bp.output(MovieResponseSchema)
+@bp.auth_required(auth)
+@role_required([1])
 def movie_add_new(json_data):
     success, response = MovieService.movie_add(json_data)
     if success:
@@ -51,6 +53,8 @@ def movie_add_new(json_data):
 @bp.put('/update/<int:id>')
 @bp.input(MovieUpdateSchema, location="json")
 @bp.output(MovieResponseSchema)
+@bp.auth_required(auth)
+@role_required([1])
 def movie_update(id, json_data):
     success, response = MovieService.movie_update(id, json_data)
     if success:
@@ -59,6 +63,8 @@ def movie_update(id, json_data):
 
 
 @bp.delete('/delete/<int:id>')
+@bp.auth_required(auth)
+@role_required([1])
 def movie_delete(id):
     success, response = MovieService.movie_delete(id)
     if success:

@@ -41,6 +41,8 @@ def screening_get_item(id):
 @bp.post('/add/')
 @bp.input(ScreeningRequestSchema, location="json")
 @bp.output(ScreeningResponseSchema)
+@bp.auth_required(auth)
+@role_required([1])
 def screening_add_new(json_data):
     success, response = ScreeningService.screening_add(json_data)
     if success:
@@ -51,6 +53,8 @@ def screening_add_new(json_data):
 @bp.put('/update/<int:id>')
 @bp.input(ScreeningUpdateSchema, location="json")
 @bp.output(ScreeningResponseSchema)
+@bp.auth_required(auth)
+@role_required([1])
 def screening_update(id, json_data):
     success, response = ScreeningService.screening_update(id, json_data)
     if success:
@@ -59,6 +63,8 @@ def screening_update(id, json_data):
 
 
 @bp.delete('/delete/<int:id>')
+@bp.auth_required(auth)
+@role_required([1])
 def screening_delete(id):
     success, response = ScreeningService.screening_delete(id)
     if success:
