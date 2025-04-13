@@ -5,7 +5,8 @@ from apiflask import HTTPError
 from app.blueprints.role.schemas import *
 from app.blueprints.role.service import RoleService
 from jegymester.app.blueprints.role.schemas import RoleResponseSchema, RoleUpdateSchema
-
+from app.extensions import auth
+from app.blueprints import role_required
 # ma
 
 @bp.route('/')

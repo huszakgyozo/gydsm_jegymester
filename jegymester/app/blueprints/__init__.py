@@ -7,7 +7,7 @@ from flask import current_app
 from authlib.jose import jwt
 from datetime import datetime
 from apiflask import HTTPError
-
+from functools import wraps #
 
 bp = APIBlueprint('main', __name__, tag="default")
 
@@ -26,6 +26,7 @@ def verify_token(token):
 
 def role_required(roles):
     def wrapper(fn):
+        @wraps(fn)  
         def decorated_function(*args, **kwargs):
             user_roles = [item["id"] for item in auth.current_user.get("roles")]
             for role in roles:
@@ -61,7 +62,9 @@ bp.register_blueprint(bp_ticketorder, url_prefix='/ticketorder')
 
 from app.blueprints.role import bp as bp_role
 bp.register_blueprint(bp_role, url_prefix='/role')
+
 from app.blueprints.user import bp as bp_user
 bp.register_blueprint(bp_user, url_prefix='/user')
+
 from app.blueprints.userrole import bp as bp_userrole
 bp.register_blueprint(bp_userrole, url_prefix='/userrole')

@@ -4,7 +4,8 @@ from apiflask import HTTPError
 
 from app.blueprints.movie.schemas import *
 from app.blueprints.movie.service import MovieService
-
+from app.extensions import auth
+from app.blueprints import role_required
 
 @bp.route('/')
 def index():

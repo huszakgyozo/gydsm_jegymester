@@ -4,7 +4,8 @@ from apiflask import HTTPError
 
 from app.blueprints.ticketcategory.schemas import *
 from app.blueprints.ticketcategory.service import TicketCategoryService
-
+from app.extensions import auth
+from app.blueprints import role_required
 
 @bp.route('/')
 def index():
@@ -29,6 +30,8 @@ def ticketcategory_get_item(id):
     raise HTTPError(message=response, status_code=400)
 
 @bp.put('/update/<int:id>')
+@bp.auth_required(auth)
+@role_required([1])
 @bp.input(TicketCategoryUpdateSchema, location="json")
 @bp.output(TicketCategoryResponseSchema)
 def ticketcategory_update(id, json_data):

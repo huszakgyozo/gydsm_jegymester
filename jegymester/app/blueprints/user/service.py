@@ -2,7 +2,7 @@
 from app.extensions import db
 from app.blueprints.user.schemas import UserListSchema, UserResponseSchema, PayloadSchema, RoleSchema
 from datetime import datetime, timedelta
-from authlib.jose import jwt
+from authlib.jose import jwt, JoseError
 from flask import current_app
 from app.models.user import User
 from app.models.role import Role
