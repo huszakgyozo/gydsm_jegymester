@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+    <div>
+        {{name}}:
+        <a href="/home">Kezdőoldal</a>
+        {% if page!="login" %}
+        <a href="/login">Bejelentkezés</a>
+        {% endif %}
+
+        {% if page!="registrate" %}
+        <a href="/registrate">Regisztráció</a>
+        {% endif %}
+
+        {% if page!="showfilm" %}
+        <a href="/showfilm">Filmek</a>
+        {% endif %}
+
+        {% if page!="showticket" %}
+        <a href="/showticket">Jegyek</a>
+        {% endif %}
+    </div>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <hr>
+    {% endwith %}
+
+    {% block content %}
+
+    {% endblock %}
+</body>
+</html>
+

@@ -11,7 +11,7 @@
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <LaunchProvider>Web launcher</LaunchProvider>
-    <WebBrowserUrl>http://localhost/swagger</WebBrowserUrl>
+    <WebBrowserUrl>http://localhost/</WebBrowserUrl>
     <OutputPath>.</OutputPath>
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
     <Name>gydsm_jegymester</Name>
@@ -36,6 +36,9 @@
     <Content Include="jegymester\.flaskenv" />
     <Content Include="jegymester\app\blueprints\seat\__init__.py" />
     <Content Include="jegymester\app\blueprints\ticket\__init__.py" />
+    <Content Include="jegymester\app\templates\base.html" />
+    <Content Include="jegymester\app\templates\index.html" />
+    <Content Include="jegymester\app\templates\login.html" />
     <Content Include="jegymester\app_db_migrations.bat" />
     <Content Include="requirements.txt" />
   </ItemGroup>
@@ -55,6 +58,7 @@
     <Folder Include="jegymester\app\blueprints\screening\" />
     <Folder Include="jegymester\app\blueprints\user\" />
     <Folder Include="jegymester\app\models\" />
+    <Folder Include="jegymester\app\forms\" />
     <Folder Include="jegymester\app\templates\" />
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +106,7 @@
     <Compile Include="jegymester\app\blueprints\user\__init__.py" />
     <Compile Include="jegymester\app\extensions.py" />
     <Compile Include="jegymester\app\blueprints\__init__.py" />
+    <Compile Include="jegymester\app\forms\loginForm.py" />
     <Compile Include="jegymester\app\models\movie.py" />
     <Compile Include="jegymester\app\models\order.py" />
     <Compile Include="jegymester\app\models\role.py" />

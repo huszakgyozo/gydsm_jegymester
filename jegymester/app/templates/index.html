@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Jegymester</h1>
+ {% if data %}
+{{ data.email }}
+ {% endif %}
+ {% if remember %}
+<p>Emlékszem rád!</p>
+{% else %}
+<p>Nem emlékszem rád.</p>
+{% endif %}
+<br />
+
+{% endblock %}

@@ -3,11 +3,12 @@ from apiflask import APIBlueprint
 from app.models import *
 
 from app.extensions import auth
-from flask import current_app
+from flask import current_app, flash
 from authlib.jose import jwt
 from datetime import datetime
 from apiflask import HTTPError
 from functools import wraps
+
 
 bp = APIBlueprint('main', __name__, tag="default")
 
