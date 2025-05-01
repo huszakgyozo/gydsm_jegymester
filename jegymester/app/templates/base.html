@@ -1,44 +1,55 @@
 <!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Home Page</title>
-</head>
+<html lang="hu" xmlns="http://www.w3.org/1999/xhtml">
 <body>
     <div>
-        {{name}}:
-        <a href="/home">Kezdőoldal</a>
-        {% if page!="login" %}
-        <a href="/login">Bejelentkezés</a>
+        {% if data %}
+            <b>{{ data.email }}:</b>
+        {% else %}
+            <b>Vendég:</b>
+        {% endif %}
+        <a href="{{ url_for('home') }}">Kezdőoldal</a>
+
+
+        {% if not data %}
+            {% if page != "login" %}
+                <a href="{{ url_for('login') }}">Bejelentkezés</a>
+            {% endif %}
+            {% if page != "registrate" %}
+                <a href="{{ url_for('registrate') }}">Regisztráció</a>
+            {% endif %}
         {% endif %}
 
-        {% if page!="registrate" %}
-        <a href="/registrate">Regisztráció</a>
-        {% endif %}
 
-        {% if page!="showfilm" %}
-        <a href="/showfilm">Filmek hozzáadása</a>
-        {% endif %}
+        {% if data %}
+            {% if page != "showticket" %}
+                <a href="{{ url_for('showticket') }}">Jegyek</a>
+            {% endif %}
+            {% if page != "profile" %}
+                <a href="{{ url_for('profile') }}">Profil</a>
+            {% endif %}
+            <a href="{{ url_for('logout') }}">Kijelentkezés</a>
 
-        {% if page!="showticket" %}
-        <a href="/showticket">Jegyek</a>
+
+            {% if 1 in roles %}
+                <a href="{{ url_for('movieadd') }}">Filmek hozzáadása</a>
+            {% endif %}
         {% endif %}
     </div>
+    
     <hr>
+    
     {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     <hr>
     {% endwith %}
-
+    
     {% block content %}
-
     {% endblock %}
 </body>
 </html>
-

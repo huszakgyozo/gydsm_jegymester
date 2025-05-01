@@ -6,40 +6,39 @@
 
     {{ form.hidden_tag()}}
 
-
     <p>
         {{form.title.label}} <br />
         {{form.title}} <br />
         {% for error in form.title.errors %}
-        <span style="color:red">[ {{error}} ]</span><br />
+            <span style="color:red">[ {{error}} ]</span><br />
         {% endfor %}
     </p>
     <p>
         {{form.duration.label}} <br />
         {{form.duration}} <br />
         {% for error in form.duration.errors %}
-        <span style="color:red">[ {{error}} ]</span><br />
+            <span style="color:red">[ {{error}} ]</span><br />
         {% endfor %}
     </p>
     <p>
         {{form.genre.label}} <br />
         {{form.genre}} <br />
         {% for error in form.genre.errors %}
-        <span style="color:red">[ {{error}} ]</span><br />
+            <span style="color:red">[ {{error}} ]</span><br />
         {% endfor %}
     </p>
     <p>
         {{form.age_limit.label}} <br />
         {{form.age_limit}} <br />
         {% for error in form.age_limit.errors %}
-        <span style="color:red">[ {{error}} ]</span><br />
+            <span style="color:red">[ {{error}} ]</span><br />
         {% endfor %}
     </p>
     <p>
         {{form.description.label}} <br />
         {{form.description}} <br />
         {% for error in form.description.errors %}
-        <span style="color:red">[ {{error}} ]</span><br />
+            <span style="color:red">[ {{error}} ]</span><br />
         {% endfor %}
     </p>
 

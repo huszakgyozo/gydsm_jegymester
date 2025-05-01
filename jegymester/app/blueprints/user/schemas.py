@@ -1,4 +1,5 @@
-﻿from marshmallow import Schema, fields
+﻿from dataclasses import field
+from marshmallow import Schema, fields
 from apiflask.fields import String, Email, Nested, Integer, List
 from apiflask.validators import Email, Length
 from app.models.user import User
@@ -39,5 +40,6 @@ class RoleSchema(Schema):
 
 class PayloadSchema(Schema):
     id = fields.Integer()
+    email =fields.String()
     roles = fields.List(fields.Nested(RoleSchema))
     exp = fields.Integer()

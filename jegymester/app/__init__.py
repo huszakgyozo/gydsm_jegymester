@@ -1,4 +1,5 @@
-﻿from sqlalchemy.sql.functions import current_user
+﻿from email import header
+from sqlalchemy.sql.functions import current_user
 from config import Config
 from app.extensions import db
 from apiflask import APIFlask
@@ -7,85 +8,100 @@ from app.extensions import db
 from app.models import *
 
 
-from flask import render_template
+from flask import make_response, render_template, request
 from flask import Flask, flash, jsonify, redirect, url_for
 from app.forms.loginForm import LoginForm
 from app.forms.registrationForm import RegistrationForm
 from app.forms.movieAddFilm import MovieAddFilm
 import requests
 from app.extensions import auth
-from app.blueprints import role_required, verify_token
+from app.blueprints import role_required, verify_token, get_auth_headers
 
-#from datetime import timedelta
+# from datetime import timedelta
+
+
 def create_app(config_class=Config):
-    #app = Flask(__name__)
+    # app = Flask(__name__)
 
     # API-k kiprobalasahoz
     app = APIFlask(__name__, json_errors=True,
                    title="Jegymester API",
                    docs_path="/swagger")
 
-    
-
-    #app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=1)
-
     @app.route('/')
     @app.route('/home')
     def home():
-        return render_template('index.html', page="index")    
+        token = request.cookies.get('token')
+        data = verify_token(token)
+        if token:
+            roles = data["roles"]
+            rolesid = set(role['id'] for role in roles)
+            return render_template('index.html', page="index", data=data, roles=rolesid)
+
+        return render_template('index.html', page="index")
+
+    @app.route('/logout')
+    def logout():
+        resp = make_response(redirect(url_for('login')))
+        resp.set_cookie('token', '', expires=0)
+        flash("Sikeresen kijelentkeztél.")
+        return resp
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
-        form = LoginForm()
-        
-        if form.validate_on_submit():
-            
+        token = request.cookies.get('token')
+        data = verify_token(token)
+        print("LOGIN:", data)
+        # néha valami miatt nem jelenik meg a bejelentkezés bug?
+        if token:
+            return redirect(url_for('home'))
 
+        form = LoginForm()
+
+        if form.validate_on_submit():
             email = form.email.data
             password = form.password.data
-            
+
             response = requests.post('http://localhost:8888/api/user/login', json={
                 'email': email,
                 'password_hash': password
             })
-            print(response.json())
-            if "token" and "email" in response.json():
-                
-                return render_template('index.html', page="index",data=response.json(),remember=form.remember_me.data)
-
+            if verify_token(response.json()["token"]):
+                resp = make_response(redirect(url_for('home')))
+                resp.set_cookie('token', response.json()["token"])
+                return resp
             else:
                 flash("Hibás email cím vagy jelszó!")
-                return render_template('login.html', page="login",form=form)
-        return render_template('login.html', page="login",form=form)
+                return render_template('login.html', page="login", form=form)
+        return render_template('login.html', page="login", form=form)
 
-    @app.route('/registrate',methods=['GET', 'POST'])
+    @app.route('/registrate', methods=['GET', 'POST'])
     def registrate():
-        
         form = RegistrationForm()
-    
         if form.validate_on_submit():
-            
             phone = form.phone.data
             email = form.email.data
             password = form.password.data
-            
+
             response = requests.post('http://localhost:8888/api/user/registrate', json={
-                'phone': phone, 
+                'phone': phone,
                 'email': email,
                 'password_hash': password
             })
-            print(response.json())
-            if "email" in response.json():
-                flash('Sikeres regisztráció')
-                
 
+            if "email" in response.json():
+                print(response.json())
+                flash('Sikeres regisztráció')
             else:
-                flash("Nem létezik az e-mail cím vagy már használatban van!")
-                return render_template('registrate.html', page="registrate",form=form)
+                flash("Már regisztrált az adott email címmel!")
+                return render_template('registrate.html', page="registrate", form=form)
         return render_template('registrate.html', page="registrate", form=form)
 
-    @app.route('/showfilm')
-    def showfilm():
+    @app.route('/movieadd', methods=['GET', 'POST'])
+    def movieadd():
+
+        token = request.cookies.get('token')
+        data = verify_token(token)
         form = MovieAddFilm()
 
         if form.validate_on_submit():
@@ -97,29 +113,30 @@ def create_app(config_class=Config):
             description = form.description.data
 
             response = requests.post('http://localhost:8888/api/movie/add', json={
+                'title': title,
+                'duration': duration,
+                'genre': genre,
+                'age_limit': age_limit,
+                'description': description
+            }, headers=get_auth_headers(token))
 
-                        'title' : title,
-                        'duration': duration,
-                        'genre': genre,
-                        'age_limit': age_limit,
-                        'description': description
-                })
             if "title" in response.json():
                 flash('Sikeres film hozzáadása')
 
             else:
                 flash("Nem sikerült a film hozzáadása!")
-                return render_template('movieAdd.html', page="showfilm", form=form)
-                
-              
-        return render_template('movieAdd.html', page="showfilm", form=form)
-        
-  
+                return render_template('movieAdd.html', page="movieadd", form=form, data=data)
+
+        return render_template('movieAdd.html', page="showfilm", form=form, data=data)
+
     @app.route('/showticket')
     def showticket():
         return render_template('showticket.html', page="showticket")
-    
 
+
+    @app.route('/profile')
+    def profile():
+        return render_template('profile.html',page="profile")
 
     app.config.from_object(config_class)
 

@@ -4,7 +4,7 @@ from wtforms import BooleanField, SubmitField
 from wtforms.validators import DataRequired, Length, Regexp
 
 class RegistrationForm(FlaskForm):
-    phone = StringField("Telefonszam",
+    phone = StringField("Telefonszám",
                            validators=[
                                DataRequired(
                                    message="Kötelező mező!"),

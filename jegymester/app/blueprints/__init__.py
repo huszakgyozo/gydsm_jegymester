@@ -13,6 +13,12 @@ from functools import wraps
 
 bp = APIBlueprint('main', __name__, tag="default")
 
+def get_auth_headers(token):
+    return {
+        'Authorization': f'Bearer {token}',
+        'Content-Type': 'application/json'
+    }
+
 @auth.verify_token
 def verify_token(token):
     try:

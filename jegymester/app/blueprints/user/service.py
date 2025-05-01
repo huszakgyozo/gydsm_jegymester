@@ -52,5 +52,6 @@ class UserService:
         payload = PayloadSchema()
         payload.exp = int((datetime.now() + timedelta(minutes=30)).timestamp())
         payload.id = user.id
+        payload.email= user.email
         payload.roles = RoleSchema().dump(obj=user.roles, many=True)
         return jwt.encode({'alg': 'RS256'}, PayloadSchema().dump(payload), current_app.config['SECRET_KEY']).decode()
