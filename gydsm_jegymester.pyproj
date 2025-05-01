@@ -39,6 +39,8 @@
     <Content Include="jegymester\app\templates\base.html" />
     <Content Include="jegymester\app\templates\index.html" />
     <Content Include="jegymester\app\templates\login.html" />
+    <Content Include="jegymester\app\templates\movieAdd.html" />
+    <Content Include="jegymester\app\templates\registrate.html" />
     <Content Include="jegymester\app_db_migrations.bat" />
     <Content Include="requirements.txt" />
   </ItemGroup>
@@ -107,6 +109,8 @@
     <Compile Include="jegymester\app\extensions.py" />
     <Compile Include="jegymester\app\blueprints\__init__.py" />
     <Compile Include="jegymester\app\forms\loginForm.py" />
+    <Compile Include="jegymester\app\forms\movieAddFilm.py" />
+    <Compile Include="jegymester\app\forms\registrationForm.py" />
     <Compile Include="jegymester\app\models\movie.py" />
     <Compile Include="jegymester\app\models\order.py" />
     <Compile Include="jegymester\app\models\role.py" />

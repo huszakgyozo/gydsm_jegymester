@@ -10,6 +10,7 @@ from apiflask import HTTPError
 from functools import wraps
 
 
+
 bp = APIBlueprint('main', __name__, tag="default")
 
 @auth.verify_token
