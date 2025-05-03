@@ -7,16 +7,15 @@ from flask import current_app
 from app.models.user import User
 from app.models.role import Role
 from sqlalchemy import delete, null, select, and_
-# ma
-
 
 class UserService:
 
     @staticmethod
     def user_registrate(request):
         try:
+            message="E-mail already exist!",db.session.execute(select(User.id).filter_by(email=request["email"])).scalar()
             if db.session.execute(select(User).filter_by(email=request["email"])).scalar_one_or_none():
-                return False, "E-mail already exist!"
+                return False, message,
             user = User(**request)
             user.set_password(user.password_hash)
             user.roles.append(

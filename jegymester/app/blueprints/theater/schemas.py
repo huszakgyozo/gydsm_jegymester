@@ -18,5 +18,6 @@ class TheaterResponseSchema(Schema):
 
 
 class TheaterToSeatSchema(Schema):
+    id = fields.Integer()
     theatname = fields.String()
     seats = fields.Nested('SeatResponseSchema', many=True)

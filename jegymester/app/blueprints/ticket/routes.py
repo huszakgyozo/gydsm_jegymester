@@ -34,8 +34,6 @@ def ticket_reserved_list_all():
 @bp.post('/add/')
 @bp.input(TicketRequestSchema, location="json")
 @bp.output(TicketResponseSchema)
-@bp.auth_required(auth)
-@role_required([2,3])
 def ticket_add_new(json_data):
     success, response = TicketService.ticket_add(json_data)
     if success:

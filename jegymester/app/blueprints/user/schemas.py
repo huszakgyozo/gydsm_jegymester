@@ -5,14 +5,10 @@ from apiflask.validators import Email, Length
 from app.models.user import User
 from app import models
 
-# ma
-
-
 class UserRequestSchema(Schema):
     email = String(validate=Email(), required=True)
     password_hash = fields.String()
     phone = fields.String()
-
 
 class UserResponseSchema(Schema):
     id = fields.Integer()

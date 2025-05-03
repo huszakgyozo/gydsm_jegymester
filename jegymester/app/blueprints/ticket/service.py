@@ -29,8 +29,12 @@ class TicketService:
     @staticmethod
     def ticket_add(request):
         try:
+            
             ticket = Ticket(**request)
             db.session.add(ticket)
+            print("Add:: ",request)
+            s=db.session.get(Seat, ticket.seat_id)
+            s.reserved = True
             db.session.commit()
 
         except Exception as ex:

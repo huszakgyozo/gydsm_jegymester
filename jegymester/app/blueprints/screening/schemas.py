@@ -33,6 +33,7 @@ class ScreeningDeleteSchema(Schema):
 
 
 class ScreeningToTheaterSchema(Schema):
+    id = fields.Integer()
     start_time = fields.String()
     theater = fields.Nested('TheaterToSeatSchema')
 

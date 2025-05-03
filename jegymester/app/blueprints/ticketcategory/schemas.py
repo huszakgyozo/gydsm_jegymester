@@ -16,6 +16,7 @@ class TicketCategoryRequestSchema(Schema):
 
 
 class TicketCategoryResponseSchema(Schema):
+    id = fields.Integer()
     catname = fields.String()
     price = fields.Integer()
 

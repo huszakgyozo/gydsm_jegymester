@@ -1,41 +1,59 @@
-﻿<!--Írd meg a jegyvásárlás HTML sablonját ticketpurchase.py alapján:-->
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block title %}Jegyvásárlás{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1 class="mb-4">Jegyvásárlás</h1>
-    {% if screenings %}
-    <form method="POST" action="{{ url_for('ticketpurchase') }}">
-        <div class="form-group">
-            <label for="screening_id">Válassza ki a vetítést:</label>
-            <select class="form-control" id="screening_id" name="screening_id">
-                {% for screening in screenings %}
-                <option value="{{ screening.id }}">{{ screening.movie.title }} - {{ screening.start_time }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="seat_id">Válassza ki a széket:</label>
-            <select class="form-control" id="seat_id" name="seat_id">
-                {% for seat in seats %}
-                <option value="{{ seat.id }}">{{ seat.seat_number }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="ticket_category">Válassza ki a jegy kategóriát:</label>
-            <select class="form-control" id="ticket_category" name="ticket_category">
-                {% for category in ticket_categories %}
-                <option value="{{ category.id }}">{{ category.catname }} - {{ category.price }} Ft</option>
-                {% endfor %}
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Jegy vásárlása</button>
+<div>
+    <h1>Jegyvásárlás</h1>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag()}}
+        <p>
+            {{ form.seat_selection.label }}<br>
+            {{ form.seat_selection }}<br>
+            {% for error in form.seat_selection.errors %}
+            <span style="color:red">[ {{error}} ]</span><br />
+            {% endfor %}
+        </p>
+
+        <p>
+            {{form.ticket_category.label}} <br />
+            {{form.ticket_category}} <br />
+            {% for error in form.ticket_category.errors %}
+            <span style="color:red">[ {{error}} ]</span><br />
+            {% endfor %}
+        </p>
+
+
+        <p>
+            {{form.email.label}} <br />
+            {% if data %}
+            {{form.email(readonly=True)}} <br />
+            {% else %}
+            {{ form.email() }} <br />
+            {% endif %}
+            {% for error in form.email.errors %}
+            <span style="color:red">[ {{error}} ]</span><br />
+            {% endfor %}
+        </p>
+
+        <p>
+            {% if data %}
+            <div style="display:none;">
+                {{ form.phone_number(readonly=True) }} <br />
+            </div>
+            {% else %}
+                {{ form.phone_number.label }}<br />
+                {{ form.phone_number() }} <br />
+            {% endif %}
+            {% for error in form.phone_number.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{form.submit}}
+        </p>
     </form>
-    {% else %}
-    <div class="alert alert-info">
-        Nincsenek elérhető vetítések.
-    </div>
-    {% endif %}
-    {% endblock %}
+   
+</div>
+{% endblock %}

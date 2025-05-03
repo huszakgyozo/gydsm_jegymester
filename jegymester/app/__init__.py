@@ -1,4 +1,5 @@
 ﻿from email import header
+from pyexpat.errors import messages
 import token
 from sqlalchemy.sql.functions import current_user
 from config import Config
@@ -104,7 +105,7 @@ def create_app(config_class=Config):
 
         token = request.cookies.get('token')
         data = verify_token(token)
-        if data:
+        if not data:
             return redirect(url_for('home'))
         form = MovieAddFilm()
 
@@ -154,16 +155,82 @@ def create_app(config_class=Config):
         ticket = response.json()
         return render_template('showticket.html', page="showticket", tickets=ticket, data=data)
 
-    # Írd meg a ticketpurchase.py alapján az app.route('/ticketpurchase') útvonalat, ahol a felhasználó kiválaszthatja a filmet és a vetítési időpontot. A kiválasztott filmhez tartozó időpontok és helyszínek automatikusan töltődjenek be. Kötelező legyen megadni emailt és telefonszámot! A vásárlás gomb megnyomásakor egy új ablakban jelenjen meg a kiválasztott jegy adatai:
+    def seats_screen_refresh(form):
+        form.seat_selection.choices = []
+        response = requests.get(
+    'http://localhost:8888/api/movie/list_all', headers=get_auth_headers(token))
+        movies = response.json()
+        for movie in movies:
+            title = movie['title']
+            for screening in movie.get('screenings', []):
+                start_time = screening['start_time']
+                theatname = screening['theater']['theatname']
+                screening_id = screening['id']
+
+                for seat in screening['theater']['seats']:
+                    if not seat['reserved']:
+                        seat_id = seat['id']
+                        seat_number = seat['seat_number']
+
+                        label = f"{title} - {start_time} - {theatname} - {seat_number}"
+                        value = f"{screening_id}|{seat_id}"
+
+                        form.seat_selection.choices.append((value, label))
+
     @app.route('/ticketpurchase', methods=['GET', 'POST'])
     def ticketpurchase():
         token = request.cookies.get('token')
         data = verify_token(token)
         form = TicketPurchaseForm()
-        response = requests.get(
-            'http://localhost:8888/api/movie/list_all', headers=get_auth_headers(token))
-        movies = response.json()
+        userid=0
+        if data:
+            userid=data['id']
+            form.phone_number.data="0000"
+            form.email.data=data['email']
+
+        seats_screen_refresh(form)
+        category = requests.get(
+            'http://localhost:8888/api/ticketcategory/list_all')
+        cat = category.json()
         
+
+        form.ticket_category.choices = [
+            (str(c['id']), f"{c['catname']} - {c['price']} Ft") for c in cat
+        ]
+
+        if form.validate_on_submit():
+            screen_seat = (form.seat_selection.data).split("|")
+            category_id=form.ticket_category.data
+            print("Kiválasztott:", screen_seat, "és a ",category_id)
+            message=""
+            if not data:
+                phone = form.phone_number.data
+                email = form.email.data
+
+                response = requests.post('http://localhost:8888/api/user/registrate', json={
+                    'phone': phone,
+                    'email': email,
+                    'password_hash': ""
+                })
+
+                message=response.json().get('message', '')
+                if len(message) == 2:
+                    userid=message[1]
+                else:
+                    userid=response.json().get('id', '')
+                    print(userid)
+                
+            ticketbuy = requests.post(
+            'http://localhost:8888/api/ticket/add/', json={
+                "screening_id": screen_seat[0],
+                "seat_id": screen_seat[1],
+                "ticketcategory_id": category_id,
+                "user_id": userid
+            })
+
+            flash("Sikeres foglalás",ticketbuy.json())
+            seats_screen_refresh(form)
+        return render_template('ticketpurchase.html', page="ticketpurchase", data=data,ticket_categories=cat,form=form)
 
 
 
@@ -172,7 +239,7 @@ def create_app(config_class=Config):
     def ticket_delete(ticketid):
         token = request.cookies.get('token')
         data = verify_token(token)
-        if data:
+        if not data:
             return redirect(url_for('home'))
         response = requests.get(f'http://localhost:8888/api/ticket/get/{ticketid}', headers=get_auth_headers(token))
         ticket = response.json()
