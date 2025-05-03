@@ -3,7 +3,7 @@ from marshmallow import Schema, fields
 from apiflask.fields import String, Email, Nested, Integer, List
 from apiflask.validators import Email, Length
 from app.models.user import User
-from jegymester.app import models
+from app import models
 
 # ma
 

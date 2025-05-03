@@ -15,11 +15,13 @@ class TicketOrderService:
     @staticmethod
     def ticketorder_delete(id):
         try:
-            ticketorder = db.session.get(TicketOrder, ticket_id=id)
+            ticketorder = db.session.execute(select(TicketOrder).filter(
+            TicketOrder.ticket_id==id)).first()
+
             if not ticketorder:
                 return False, "A rendelés nem található!"
             elif ticketorder:
-                ticketorder.ticket_active = 0
+                ticketorder[0].ticket_active = 0
                 db.session.commit()
                 return True, "Az adott rendelés törölve."
 

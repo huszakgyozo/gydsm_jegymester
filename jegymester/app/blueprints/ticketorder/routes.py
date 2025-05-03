@@ -28,8 +28,8 @@ def ticketorder_list_all():
 @bp.delete('/delete/<int:ticket_id>')
 @bp.auth_required(auth)
 #@role_required([1])
-def ticketorder_delete(id):
-    success, response = TicketOrderService.ticketorder_delete(id)
+def ticketorder_delete(ticket_id):
+    success, response = TicketOrderService.ticketorder_delete(ticket_id)
     if success:
         return response, 200
     raise HTTPError(message=response, status_code=400)

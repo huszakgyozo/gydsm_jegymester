@@ -14,10 +14,9 @@
                             <th>Vetítés ideje</th>
                             <th>Terem</th>
                             <th>Szék</th>
-                            <th>Állapot</th>
                             <th>Kategória</th>
                             <th>Ár</th>
-                            <th>Aktív rendelés</th>
+                            <th>Aktív jegy</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,7 +26,6 @@
                             <td>{{ ticket.screening.start_time }}</td>
                             <td>{{ ticket.screening.theater.theatname }}</td>
                             <td>{{ ticket.seat.seat_number }}</td>
-                            <td>{{ 'Foglalt' if ticket.seat.reserved else 'Szabad' }}</td>
                             <td>{{ ticket.ticketcategory.catname }}</td>
                             <td>{{ ticket.ticketcategory.price }} Ft</td>
                             <td>
@@ -37,7 +35,9 @@
                                 Nem
                                 {% endif %}
                             </td>
-                            <td><a href="{{ url_for('ticket_delete',ticket_id=ticket.id) }}">Jegy törlés</a></td>
+                            <td>
+                                <a href="{{ url_for('ticket_delete', ticketid=ticket.id) }}">Jegy törlés</a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

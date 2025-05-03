@@ -129,11 +129,11 @@ try:
         db.session.add_all([
             Seat(theater_id=theater1.id, seat_number=f"{row}{i}")
             for row in ["A", "B", "C"]
-            for i in range(1, 21)
+            for i in range(1, 2)
         ] + [
             Seat(theater_id=theater2.id, seat_number=f"{row}{i}")
             for row in ["A", "B", "C"]
-            for i in range(1, 11)
+            for i in range(1, 2)
         ])
         db.session.commit()
 

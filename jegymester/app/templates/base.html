@@ -8,6 +8,9 @@
         <b>Vendég:</b>
         {% endif %}
         <a href="{{ url_for('home') }}">Kezdőoldal</a>
+        {% if page != "ticketpurchase" %}
+        <a href="{{ url_for('ticketpurchase') }}">Jegy vásárlás</a>
+        {% endif %}
 
 
         {% if page != "movielist" %}
@@ -28,9 +31,7 @@
         {% if page != "ticketlist" %}
         <a href="{{ url_for('ticketlist') }}">Jegyek</a>
         {% endif %}
-        {% if page != "profile" %}
-        <a href="{{ url_for('profile') }}">Profil</a>
-        {% endif %}
+
         <a href="{{ url_for('logout') }}">Kijelentkezés</a>
 
 

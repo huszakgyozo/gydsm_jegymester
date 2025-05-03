@@ -13,7 +13,7 @@ def index():
 
 
 @bp.get('/list_all')
-@bp.output(MovieListSchema(many=True))
+@bp.output(MovieToScreeningSchema(many=True))
 def movie_list_all():
     success, response = MovieService.movie_list_all()
     if success:

@@ -14,9 +14,11 @@ from flask import Flask, flash, jsonify, redirect, url_for
 from app.forms.loginForm import LoginForm
 from app.forms.registrationForm import RegistrationForm
 from app.forms.movieAddFilm import MovieAddFilm
+from app.forms.ticketpurchase import TicketPurchaseForm
 import requests
 from app.extensions import auth
 from app.blueprints import role_required, verify_token, get_auth_headers
+from datetime import datetime, timedelta
 
 # from datetime import timedelta
 
@@ -34,7 +36,7 @@ def create_app(config_class=Config):
     def home():
         token = request.cookies.get('token')
         data = verify_token(token)
-        if token:
+        if data:
             roles = data["roles"]
             rolesid = set(role['id'] for role in roles)
             return render_template('index.html', page="index", data=data, roles=rolesid)
@@ -52,9 +54,8 @@ def create_app(config_class=Config):
     def login():
         token = request.cookies.get('token')
         data = verify_token(token)
-        print("LOGIN:", data)
-        # néha valami miatt nem jelenik meg a bejelentkezés bug?
-        if token:
+
+        if data:
             return redirect(url_for('home'))
 
         form = LoginForm()
@@ -103,6 +104,8 @@ def create_app(config_class=Config):
 
         token = request.cookies.get('token')
         data = verify_token(token)
+        if data:
+            return redirect(url_for('home'))
         form = MovieAddFilm()
 
         if form.validate_on_submit():
@@ -144,26 +147,40 @@ def create_app(config_class=Config):
     def ticketlist():
         token = request.cookies.get('token')
         data = verify_token(token)
+
         
         response = requests.get(
             f'http://localhost:8888/api/ticket/get/usertickets/{data["id"]}', headers=get_auth_headers(token))
         ticket = response.json()
         return render_template('showticket.html', page="showticket", tickets=ticket, data=data)
 
-    @app.route('/profile')
-    def profile():
-        return render_template('profile.html',page="profile")
-
-    @app.route('/ticket_delete')
-    def ticket_delete(ticket_id):
+    @app.route('/ticketpurchase')
+    def ticketpurchase():
         token = request.cookies.get('token')
         data = verify_token(token)
-
+        form = TicketPurchaseForm()
         response = requests.get(
-            f'http://localhost:8888/api/ticketorder/delete/{ticket_id}', headers=get_auth_headers(token))
+            'http://localhost:8888/api/movie/list_all', headers=get_auth_headers(token))
+        movies_info = response.json()
+
+        return render_template('ticketpurchase.html',page="ticketpurchase",form=form)
+
+    @app.route('/ticket_delete/<int:ticketid>', methods=['GET', 'DELETE'])
+    def ticket_delete(ticketid):
+        token = request.cookies.get('token')
+        data = verify_token(token)
+        if data:
+            return redirect(url_for('home'))
+        response = requests.get(f'http://localhost:8888/api/ticket/get/{ticketid}', headers=get_auth_headers(token))
         ticket = response.json()
-        flash("Jegy törlése sikeres.")
-        return render_template('showticket.html', page="showticket")
+        start_time = datetime.strptime(ticket["screening"]["start_time"], "%Y-%m-%d %H:%M:%S")
+        if datetime.now() < start_time - timedelta(hours=4):
+            response = requests.delete(
+                 f'http://localhost:8888/api/ticketorder/delete/{ticketid}', headers=get_auth_headers(token))
+            flash("Jegy törlése sikeres.")
+        else:
+            flash("4 órával a kezdés elött törölhető csak.")
+        return ticketlist()
 
 
 

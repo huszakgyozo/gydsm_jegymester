@@ -50,6 +50,5 @@ class MovieToScreeningSchema(Schema):
     description = fields.String()
     screenings = fields.Nested('ScreeningToTheaterSchema', many=True)
 
-
 class ScreeningMovieSchema(Schema):
     title = fields.String()

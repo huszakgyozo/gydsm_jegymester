@@ -10,7 +10,7 @@ class MovieService:
     @staticmethod
     def movie_list_all():
         movies = db.session.execute(select(Movie)).scalars()
-        return True, MovieListSchema().dump(movies, many=True)
+        return True, MovieToScreeningSchema().dump(movies, many=True)
 
     @staticmethod
     def movie_list_active():
@@ -74,3 +74,4 @@ class MovieService:
         if not movie:
             return False, "A film nem található!"
         return True, MovieToScreeningSchema().dump(movie)
+    
