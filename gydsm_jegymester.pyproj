@@ -40,7 +40,9 @@
     <Content Include="jegymester\app\templates\index.html" />
     <Content Include="jegymester\app\templates\login.html" />
     <Content Include="jegymester\app\templates\movieAdd.html" />
+    <Content Include="jegymester\app\templates\movieList.html" />
     <Content Include="jegymester\app\templates\registrate.html" />
+    <Content Include="jegymester\app\templates\showticket.html" />
     <Content Include="jegymester\app_db_migrations.bat" />
     <Content Include="requirements.txt" />
   </ItemGroup>

@@ -25,9 +25,9 @@ def ticketorder_list_all():
 
 
 # ha a jegy nem aktív, akkor delete
-@bp.delete('/delete/<int:id>')
+@bp.delete('/delete/<int:ticket_id>')
 @bp.auth_required(auth)
-@role_required([1])
+#@role_required([1])
 def ticketorder_delete(id):
     success, response = TicketOrderService.ticketorder_delete(id)
     if success:

@@ -1,0 +1,52 @@
+﻿{% extends "base.html" %}
+{% block title %}Jegyek{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Foglalt jegyek</h1>
+
+    {% if tickets %}
+    <div class="table-responsive">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Film címe</th>
+                            <th>Vetítés ideje</th>
+                            <th>Terem</th>
+                            <th>Szék</th>
+                            <th>Állapot</th>
+                            <th>Kategória</th>
+                            <th>Ár</th>
+                            <th>Aktív rendelés</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in tickets %}
+                        <tr>
+                            <td>{{ ticket.screening.movie.title }}</td>
+                            <td>{{ ticket.screening.start_time }}</td>
+                            <td>{{ ticket.screening.theater.theatname }}</td>
+                            <td>{{ ticket.seat.seat_number }}</td>
+                            <td>{{ 'Foglalt' if ticket.seat.reserved else 'Szabad' }}</td>
+                            <td>{{ ticket.ticketcategory.catname }}</td>
+                            <td>{{ ticket.ticketcategory.price }} Ft</td>
+                            <td>
+                                {% if ticket.ticket_orders and ticket.ticket_orders[0].ticket_active %}
+                                Igen
+                                {% else %}
+                                Nem
+                                {% endif %}
+                            </td>
+                            <td><a href="{{ url_for('ticket_delete',ticket_id=ticket.id) }}">Jegy törlés</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        Nincsenek foglalt jegyek.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

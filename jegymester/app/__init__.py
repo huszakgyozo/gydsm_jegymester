@@ -1,4 +1,5 @@
 ﻿from email import header
+import token
 from sqlalchemy.sql.functions import current_user
 from config import Config
 from app.extensions import db
@@ -129,14 +130,43 @@ def create_app(config_class=Config):
 
         return render_template('movieAdd.html', page="showfilm", form=form, data=data)
 
-    @app.route('/showticket')
-    def showticket():
-        return render_template('showticket.html', page="showticket")
+    @app.route('/movielist')
+    def movielist():
+        token = request.cookies.get('token')
+        data = verify_token(token)
+        response = requests.get(
+            'http://localhost:8888/api/movie/list_all', headers=get_auth_headers(token))
+        movies = response.json()
+        return render_template('movielist.html', page="movielist", movies=movies, data=data)
 
+
+    @app.route('/ticketlist')
+    def ticketlist():
+        token = request.cookies.get('token')
+        data = verify_token(token)
+        
+        response = requests.get(
+            f'http://localhost:8888/api/ticket/get/usertickets/{data["id"]}', headers=get_auth_headers(token))
+        ticket = response.json()
+        return render_template('showticket.html', page="showticket", tickets=ticket, data=data)
 
     @app.route('/profile')
     def profile():
         return render_template('profile.html',page="profile")
+
+    @app.route('/ticket_delete')
+    def ticket_delete(ticket_id):
+        token = request.cookies.get('token')
+        data = verify_token(token)
+
+        response = requests.get(
+            f'http://localhost:8888/api/ticketorder/delete/{ticket_id}', headers=get_auth_headers(token))
+        ticket = response.json()
+        flash("Jegy törlése sikeres.")
+        return render_template('showticket.html', page="showticket")
+
+
+
 
     app.config.from_object(config_class)
 

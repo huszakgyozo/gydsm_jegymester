@@ -57,3 +57,11 @@ class TicketService:
         if not ticket:
             return False, "get_ticket() hiba!"
         return True, TicketToTicketOrder().dump(ticket)
+
+    
+    @staticmethod
+    def get_usertickets(userid):
+        ticket = db.session.execute(select(Ticket).filter(Ticket.user_id == userid)).scalars().all()
+        if not ticket:
+            return False, "get_ticket() hiba!"
+        return True, TicketToTicketOrder().dump(ticket, many=True)

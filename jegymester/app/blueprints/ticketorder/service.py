@@ -15,7 +15,7 @@ class TicketOrderService:
     @staticmethod
     def ticketorder_delete(id):
         try:
-            ticketorder = db.session.get(TicketOrder, id)
+            ticketorder = db.session.get(TicketOrder, ticket_id=id)
             if not ticketorder:
                 return False, "A rendelés nem található!"
             elif ticketorder:

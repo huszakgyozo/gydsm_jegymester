@@ -1,0 +1,32 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<h1>Filmek listája</h1>
+
+  {% if movies %}
+<table>
+    <thead>
+        <tr>
+            <th>Cím</th>
+            <th>Hossz (perc)</th>
+            <th>Műfaj</th>
+            <th>Korhatár</th>
+            <th>Leírás</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for m in movies %}
+        <tr>
+            <td>{{ m.title }}</td>
+            <td>{{ m.duration }}</td>
+            <td>{{ m.genre }}</td>
+            <td>{{ m.age_limit }}</td>
+            <td>{{ m.description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+  {% else %}
+<p>Nincsenek megjeleníthető filmek.</p>
+  {% endif %}
+{% endblock %}

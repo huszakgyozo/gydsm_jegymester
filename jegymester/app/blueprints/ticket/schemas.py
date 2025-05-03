@@ -31,6 +31,7 @@ class TicketToSeatSchema(Schema):
 
 
 class TicketToTicketOrder(Schema):
+    id = fields.Integer()
     ticketcategory = fields.Nested('TicketCategoryResponseSchema')
     seat = fields.Nested('SeatResponseSchema')
     screening = fields.Nested('TicketMoviSchema')

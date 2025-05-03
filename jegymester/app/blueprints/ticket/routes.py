@@ -1,4 +1,5 @@
-﻿from app.blueprints.ticket import bp
+﻿from sqlalchemy.sql.functions import current_user
+from app.blueprints.ticket import bp
 from apiflask.fields import String, Integer
 from apiflask import HTTPError
 
@@ -59,6 +60,16 @@ def ticket_update(id, json_data):
 @role_required([1])
 def ticketorder_One_ticket(id):
     success, response = TicketService.get_ticket(id)
+    if success:
+        return response, 200
+    raise HTTPError(message=response, status_code=400)
+
+@bp.get('/get/usertickets/<int:userid>')
+@bp.output(TicketToTicketOrder(many=True))
+@bp.auth_required(auth)
+#@role_required([2])
+def usertickets(userid):
+    success, response = TicketService.get_usertickets(userid)
     if success:
         return response, 200
     raise HTTPError(message=response, status_code=400)
