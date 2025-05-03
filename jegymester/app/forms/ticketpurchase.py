@@ -1,49 +1,24 @@
-﻿from flask_wtf import FlaskForm
-from wtforms import SelectField, IntegerField, RadioField, StringField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, Email, NumberRange, Length
+﻿# Írd meg a jegyvásárlás formját a következőképpen: legördülő menüben választható legyen a film és a vetítési időpont. A kiválasztott filmhez tartozó időpontok és helyszínek automatikusan töltődjenek be. Kötelező legyen megadni emailt és telefonszámot! A vásárlás gomb megnyomásakor egy új ablakban jelenjen meg a kiválasztott jegy adatai:
+
+from flask_wtf import FlaskForm
+from wtforms import IntegerField, StringField, PasswordField 
+from wtforms import BooleanField, SubmitField
+from wtforms.validators import DataRequired, Length
+
 
 class TicketPurchaseForm(FlaskForm):
-    # A view-ban töltsd fel:
-    # form.film_id.choices = [(f.id, f.title) for f in movies]
-    movie_id = SelectField(
-        "Film címe",
-        coerce=int,
-        validators=[DataRequired(message="Válassz egy filmet!")]
-    )
+    movie = StringField("Film cím", validators=[DataRequired()])
+    start_time = StringField("Vetítési időpont", validators=[DataRequired()])
+    theatname = StringField("Helyszín", validators=[DataRequired()])
 
-    # Ha vetítés alapján is szűrsz:
-    # form.screening_id.choices = [(s.id, s.start_time.strftime("%Y-%m-%d %H:%M")) for s in screenings]
-    screening_id = SelectField(
-        "Vetítés időpontja",
-        coerce=int,
-        validators=[DataRequired(message="Válassz vetítési időpontot!")]
-    )
+    # szék kiválasztás legördülő listából:
+    seat_number = StringField("Szék", validators=[DataRequired()])
 
-    seat_number = IntegerField(
-        "Szék száma",
-        validators=[DataRequired(), NumberRange(min=1, max=40, message="Legalább 1-es székszámot adj meg!")]
-    )
 
-    # Jegytípus rádiógombokkal
-    ticket_type = RadioField(
-        "Jegytípus",
-        choices=[
-            ('adult',    'Felnőtt'),
-            ('student',  'Diák'),
-            ('senior',   'Nyugdíjas')
-        ],
-        default='adult',
-        validators=[DataRequired(message="Jelöld be a jegytípust!")]
-    )
+    email = StringField("Email cím", validators=[
+                        DataRequired(), Length(min=6, max=35)])
+    phone_number = StringField("Telefonszám", validators=[
+                               DataRequired(), Length(min=10, max=15)])
 
-    # Vevő adatok
-    customer_mobile = StringField(
-        "Telefonszám",
-        validators=[DataRequired(), Length(min=2, max=100)]
-    )
-    customer_email = StringField(
-        "Email cím",
-        validators=[DataRequired(), Email()]
-    )
+    submit = SubmitField("Vásárlás")
 
-    submit = SubmitField("Jegyek vásárlása")

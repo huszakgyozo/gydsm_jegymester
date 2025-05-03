@@ -154,16 +154,19 @@ def create_app(config_class=Config):
         ticket = response.json()
         return render_template('showticket.html', page="showticket", tickets=ticket, data=data)
 
-    @app.route('/ticketpurchase')
+    # Írd meg a ticketpurchase.py alapján az app.route('/ticketpurchase') útvonalat, ahol a felhasználó kiválaszthatja a filmet és a vetítési időpontot. A kiválasztott filmhez tartozó időpontok és helyszínek automatikusan töltődjenek be. Kötelező legyen megadni emailt és telefonszámot! A vásárlás gomb megnyomásakor egy új ablakban jelenjen meg a kiválasztott jegy adatai:
+    @app.route('/ticketpurchase', methods=['GET', 'POST'])
     def ticketpurchase():
         token = request.cookies.get('token')
         data = verify_token(token)
         form = TicketPurchaseForm()
         response = requests.get(
             'http://localhost:8888/api/movie/list_all', headers=get_auth_headers(token))
-        movies_info = response.json()
+        movies = response.json()
+        
 
-        return render_template('ticketpurchase.html',page="ticketpurchase",form=form)
+
+
 
     @app.route('/ticket_delete/<int:ticketid>', methods=['GET', 'DELETE'])
     def ticket_delete(ticketid):
