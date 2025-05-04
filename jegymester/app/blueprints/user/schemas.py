@@ -39,3 +39,8 @@ class PayloadSchema(Schema):
     email =fields.String()
     roles = fields.List(fields.Nested(RoleSchema))
     exp = fields.Integer()
+
+class UserUpdateSchema(Schema):
+    id = fields.Integer()
+    email = fields.String()
+    phone = fields.String()

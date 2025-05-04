@@ -36,6 +36,18 @@ def user_login(json_data):
         return response, 200
     raise HTTPError(message=response, status_code=400)
 
+@bp.post('/update')
+@bp.doc(tags=["user"])
+@bp.input(UserUpdateSchema, location="json")
+@bp.output(UserResponseSchema)
+@bp.auth_required(auth)
+def user_update(json_data):
+    success, response = UserService.user_update(json_data)
+    if success:
+        return response, 200
+    raise HTTPError(message=response, status_code=400)
+
+
 # 1 admin
 # 2 user
 # 3 cashier

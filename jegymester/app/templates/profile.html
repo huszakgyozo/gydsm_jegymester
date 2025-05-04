@@ -1,0 +1,18 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<h2>Profil adatok módosítása</h2>
+<form method="POST" action="" novalidate>
+    {{ form.hidden_tag() }}
+    <div>
+        <label for="email">Új e-mail cím:</label>
+        {{ form.email(class="form-control") }}
+    </div>
+    <div>
+        <label for="phone">Új telefonszám:</label>
+        {{ form.phone(class="form-control") }}
+    </div>
+    <button type="submit">Mentés</button>
+</form>
+{% endblock %}
+

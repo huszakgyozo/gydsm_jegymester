@@ -54,3 +54,16 @@ class UserService:
         payload.email= user.email
         payload.roles = RoleSchema().dump(obj=user.roles, many=True)
         return jwt.encode({'alg': 'RS256'}, PayloadSchema().dump(payload), current_app.config['SECRET_KEY']).decode()
+
+    @staticmethod
+    def user_update(request):
+       try:
+            print("asd" ,request["id"])
+            user = db.session.get(User, request["id"])
+            if user:
+                user.email = request["email"]
+                user.phone = request["phone"]
+                db.session.commit()
+       except Exception as ex:
+            return False, "User_update() hiba!"+str(ex)
+       return True, UserResponseSchema().dump(user)

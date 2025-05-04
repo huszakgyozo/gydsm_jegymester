@@ -32,6 +32,10 @@
         <a href="{{ url_for('ticketlist') }}">Jegyek</a>
         {% endif %}
 
+        {% if page != "profile" %}
+        <a href="{{ url_for('profile') }}">Profil adatok módosítása</a>
+        {% endif %}
+
         <a href="{{ url_for('logout') }}">Kijelentkezés</a>
 
 

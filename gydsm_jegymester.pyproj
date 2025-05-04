@@ -36,6 +36,7 @@
     <Content Include="jegymester\.flaskenv" />
     <Content Include="jegymester\app\blueprints\seat\__init__.py" />
     <Content Include="jegymester\app\blueprints\ticket\__init__.py" />
+    <Content Include="jegymester\app\templates\profile.html" />
     <Content Include="jegymester\app\templates\base.html" />
     <Content Include="jegymester\app\templates\index.html" />
     <Content Include="jegymester\app\templates\login.html" />
@@ -111,6 +112,7 @@
     <Compile Include="jegymester\app\blueprints\user\__init__.py" />
     <Compile Include="jegymester\app\extensions.py" />
     <Compile Include="jegymester\app\blueprints\__init__.py" />
+    <Compile Include="jegymester\app\forms\profileEditForm.py" />
     <Compile Include="jegymester\app\forms\loginForm.py" />
     <Compile Include="jegymester\app\forms\movieAddFilm.py" />
     <Compile Include="jegymester\app\forms\registrationForm.py" />

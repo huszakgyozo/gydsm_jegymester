@@ -16,6 +16,8 @@ from app.forms.loginForm import LoginForm
 from app.forms.registrationForm import RegistrationForm
 from app.forms.movieAddFilm import MovieAddFilm
 from app.forms.ticketpurchase import TicketPurchaseForm
+from app.forms.profileEditForm import profileEditForm
+#from flask import login_required, current_user
 import requests
 from app.extensions import auth
 from app.blueprints import role_required, verify_token, get_auth_headers
@@ -255,6 +257,26 @@ def create_app(config_class=Config):
 
 
 
+    @app.route('/profile', methods=['GET', 'POST'])
+    def profile():
+        token = request.cookies.get('token')
+        data = verify_token(token)
+        form = profileEditForm()
+        if form.validate_on_submit():
+            response = requests.post('http://localhost:8888/api/user/update',
+                                   json = { "id": data["id"],
+                                   "email" : form.email.data,
+                                   "phone" : form.phone.data
+                                   },
+                                    headers=get_auth_headers(token))
+            if response.ok:
+                flash('Profil adatok sikeresen módosítva.')
+            else:
+                flash('Az e-mail cim már létezik!')
+            
+            return redirect(url_for('profile'))
+        return render_template('profile.html', form=form, data = data)
+                    
     app.config.from_object(config_class)
 
     # Initialize Flask extensions here
