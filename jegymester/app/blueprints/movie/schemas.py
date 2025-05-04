@@ -30,12 +30,7 @@ class MovieResponseSchema(Schema):
     description = fields.String()
 
 class MovieUpdateSchema(Schema):
-    title = fields.String()
-    duration = fields.Integer()
-    genre = fields.String()
-    age_limit = fields.Integer()
     description = fields.String()
-    deleted = fields.Boolean()
 
 
 class MovieDeleteSchema(Schema):

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Jegyvásárlás{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Film módosítás</h1>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag()}}
+        <p>
+            {{ form.movie_select.label }}<br>
+            {{ form.movie_select(id="movie_select") }}<br>
+            {% for error in form.movie_select.errors %}
+            <span style="color:red">[ {{error}} ]</span><br />
+            {% endfor %}
+        </p>
+
+        <p>
+            {{form.description.label}} <br />
+            {{form.description(id="description")}} <br />
+            {% for error in form.description.errors %}
+            <span style="color:red">[ {{error}} ]</span><br />
+            {% endfor %}
+        </p>
+
+
+        <p>
+            {{form.submit}}
+        </p>
+        <p>
+            {{ form.delete }}
+        </p>
+    </form>
+
+</div>
+<script>
+    const filmDescriptions = {
+    {% for movie in movies %}
+    "{{ movie.id }}": "{{ movie.description | escape }}"{% if not loop.last %}, {% endif %}
+    {% endfor %}
+};
+
+document.getElementById('movie_select').addEventListener('change', function() {
+    const selectedId = this.value;
+    const description = filmDescriptions[selectedId] || "";
+    document.getElementById('description').value = description;
+});
+</script>
+{% endblock %}

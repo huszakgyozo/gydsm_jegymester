@@ -41,6 +41,8 @@
 
         {% if 1 in roles %}
         <a href="{{ url_for('movieadd') }}">Filmek hozzáadása</a>
+        <a href="{{ url_for('movie_edit') }}">Film módosítás</a>
+        <a href="{{ url_for('new_screening') }}">Vetítés hozzáadás</a>
         {% endif %}
 
         {% endif %}

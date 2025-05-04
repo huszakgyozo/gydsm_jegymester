@@ -15,7 +15,7 @@ class ScreeningListSchema(Schema):
 class ScreeningRequestSchema(Schema):
     movie_id = fields.Integer()
     theater_id = fields.Integer()
-    start_time = fields.String()
+    start_time = fields.DateTime(required=True, format='%Y-%m-%d %H:%M:%S')
 
 class ScreeningResponseSchema(Schema):
     movie_id = fields.Integer()

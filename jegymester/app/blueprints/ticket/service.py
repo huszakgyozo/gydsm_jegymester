@@ -2,9 +2,13 @@
 from app.blueprints.ticket.schemas import *
 
 from app.models.ticket import Ticket
+from app.models.ticketorder import TicketOrder
 from app.models.seat import Seat
+from app.models.order import Order
 
 from sqlalchemy import null, select, and_
+
+from app.blueprints import order
 
 
 class TicketService:
@@ -29,12 +33,16 @@ class TicketService:
     @staticmethod
     def ticket_add(request):
         try:
-            
             ticket = Ticket(**request)
             db.session.add(ticket)
-            print("Add:: ",request)
+            db.session.flush() 
             s=db.session.get(Seat, ticket.seat_id)
             s.reserved = True
+            new_order=Order(payment_status="Successful")
+            db.session.add(new_order)
+            db.session.flush() 
+            new_tickorder=TicketOrder(order_id=new_order.id,ticket_id=ticket.id,ticket_active=True)
+            db.session.add(new_tickorder)
             db.session.commit()
 
         except Exception as ex:

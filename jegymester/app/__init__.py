@@ -254,7 +254,71 @@ def create_app(config_class=Config):
             flash("4 órával a kezdés elött törölhető csak.")
         return ticketlist()
 
+    @app.route('/movie_edit', methods=['GET', 'POST'])
+    def movie_edit():
+        token = request.cookies.get('token')
+        data = verify_token(token)
+        if not data:
+            return redirect(url_for('home'))
+        form = MovieEdit()
+        movies = requests.get(
+            'http://localhost:8888/api/movie/list_active')
+        moviesjson = movies.json()
+        form.movie_select.choices = [(str(movie['id']), movie['title']) for movie in moviesjson]
 
+
+        if form.validate_on_submit():
+            if form.submit.data:
+                movies = requests.put(
+                f'http://localhost:8888/api/movie/update/{form.movie_select.data}',json={
+                    "description": form.description.data
+                    }, headers=get_auth_headers(token))
+                flash("Sikeres módosítás.")
+            elif form.delete.data:
+                response = requests.delete(
+                f'http://localhost:8888/api/movie/delete/{form.movie_select.data}'
+                ,headers=get_auth_headers(token))
+                flash("Film törölve.")
+                form.description.data = moviesjson[0]['description']
+        else:
+            form.description.data = moviesjson[0]['description']
+            
+        movies = requests.get(
+        'http://localhost:8888/api/movie/list_active')
+        moviesjson = movies.json()
+        form.movie_select.choices = [(str(movie['id']), movie['title']) for movie in moviesjson]
+
+        return render_template('movieEdit.html', page="movieEdit", data=data,form=form,movies=moviesjson)
+
+    @app.route('/new_screening', methods=['GET', 'POST'])
+    def new_screening():
+        token = request.cookies.get('token')
+        data = verify_token(token)
+        if not data:
+            return redirect(url_for('home'))
+
+        form = NewScreeningForm()
+
+        movies = requests.get('http://localhost:8888/api/movie/list_active')
+        theaters = requests.get('http://localhost:8888/api/theater/list')
+    
+        form.movie_select.choices = [(str(movie['id']), movie['title']) for movie in movies.json()]
+        form.theater_select.choices = [(str(theater['id']), theater['theatname']) for theater in theaters.json()]
+
+        if form.validate_on_submit():
+            response = requests.post(
+                'http://localhost:8888/api/screening/add',
+                json={
+                    'movie_id': form.movie_select.data,
+                    'theater_id': form.theater_select.data,
+                    'start_time': form.start_time.data.strftime('%Y-%m-%d %H:%M:%S')
+                }, headers=get_auth_headers(token)
+            )
+
+            flash(f"Új vetítés sikeresen hozzáadva.")
+
+
+        return render_template('screeningAdd.html', form=form,data=data, page="new_screening")
 
 
     @app.route('/profile', methods=['GET', 'POST'])
