@@ -17,13 +17,12 @@ from app.forms.registrationForm import RegistrationForm
 from app.forms.movieAddFilm import MovieAddFilm
 from app.forms.ticketpurchase import TicketPurchaseForm
 from app.forms.profileEditForm import profileEditForm
-#from flask import login_required, current_user
+from app.forms.movieEdit import MovieEdit
+from app.forms.newScreening import NewScreeningForm
 import requests
 from app.extensions import auth
 from app.blueprints import role_required, verify_token, get_auth_headers
 from datetime import datetime, timedelta
-
-# from datetime import timedelta
 
 
 def create_app(config_class=Config):
@@ -104,7 +103,6 @@ def create_app(config_class=Config):
 
     @app.route('/movieadd', methods=['GET', 'POST'])
     def movieadd():
-
         token = request.cookies.get('token')
         data = verify_token(token)
         if not data:
@@ -112,7 +110,6 @@ def create_app(config_class=Config):
         form = MovieAddFilm()
 
         if form.validate_on_submit():
-
             title = form.title.data
             duration = form.duration.data
             genre = form.genre.data
@@ -150,8 +147,6 @@ def create_app(config_class=Config):
     def ticketlist():
         token = request.cookies.get('token')
         data = verify_token(token)
-
-        
         response = requests.get(
             f'http://localhost:8888/api/ticket/get/usertickets/{data["id"]}', headers=get_auth_headers(token))
         ticket = response.json()
@@ -340,6 +335,19 @@ def create_app(config_class=Config):
             
             return redirect(url_for('profile'))
         return render_template('profile.html', form=form, data = data)
+
+    @app.route('/edit_screening', methods=['GET', 'POST'])
+    def edit_screening():
+        #form = ScreeningEdit()
+
+        screenings_response = requests.get('http://localhost:8888/api/screening//list_all')
+        theaters_response = requests.get('http://localhost:8888/api/theater/list')
+    
+        screenings_json = screenings_response.json()
+        theaters_json = theaters_response.json()
+        #if form.validate_on_submit():
+        pass
+
                     
     app.config.from_object(config_class)
 
