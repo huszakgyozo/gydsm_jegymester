@@ -9,7 +9,8 @@ from sqlalchemy import null, select, and_
 class MovieService:
     @staticmethod
     def movie_list_all():
-        movies = db.session.execute(select(Movie)).scalars()
+        movies = db.session.execute(select(Movie).filter(
+            Movie.deleted.is_(0))).scalars()
         return True, MovieToScreeningSchema().dump(movies, many=True)
 
     @staticmethod
@@ -41,12 +42,12 @@ class MovieService:
         try:
             movie = db.session.get(Movie, id)
             if movie:
-                movie.title = request["title"]
-                movie.duration = int(request["duration"])
-                movie.genre = request["genre"]
-                movie.age_limit = int(request["age_limit"])
+                # movie.title = request["title"]
+                # movie.duration = int(request["duration"])
+                # movie.genre = request["genre"]
+                # movie.age_limit = int(request["age_limit"])
                 movie.description = request["description"]
-                movie.deleted = int(request["deleted"])
+                #movie.deleted = int(request["deleted"])
                 db.session.commit()
 
         except Exception as ex:

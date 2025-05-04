@@ -40,8 +40,10 @@
     <Content Include="jegymester\app\templates\index.html" />
     <Content Include="jegymester\app\templates\login.html" />
     <Content Include="jegymester\app\templates\movieAdd.html" />
+    <Content Include="jegymester\app\templates\movieEdit.html" />
     <Content Include="jegymester\app\templates\movieList.html" />
     <Content Include="jegymester\app\templates\registrate.html" />
+    <Content Include="jegymester\app\templates\screeningAdd.html" />
     <Content Include="jegymester\app\templates\showticket.html" />
     <Content Include="jegymester\app\templates\ticketpurchase.html" />
     <Content Include="jegymester\app_db_migrations.bat" />
@@ -113,6 +115,8 @@
     <Compile Include="jegymester\app\blueprints\__init__.py" />
     <Compile Include="jegymester\app\forms\loginForm.py" />
     <Compile Include="jegymester\app\forms\movieAddFilm.py" />
+    <Compile Include="jegymester\app\forms\movieEdit.py" />
+    <Compile Include="jegymester\app\forms\newScreening.py" />
     <Compile Include="jegymester\app\forms\registrationForm.py" />
     <Compile Include="jegymester\app\forms\ticketpurchase.py" />
     <Compile Include="jegymester\app\models\movie.py" />

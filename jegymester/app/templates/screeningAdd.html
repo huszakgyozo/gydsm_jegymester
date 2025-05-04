@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Új vetítés hozzáadása</h1>
+<form action="" method="post" novalidate>
+      {{ form.hidden_tag() }}
+    <p>
+        {{ form.movie_select.label }}<br>
+        {{ form.movie_select() }}
+    </p>
+    <p>
+        {{ form.theater_select.label }}<br>
+        {{ form.theater_select() }}
+    </p>
+    <p>
+        {{ form.start_time.label }}<br>
+        {{ form.start_time(type="datetime-local") }}
+    </p>
+    <p>
+        {{ form.submit() }}
+    </p>
+</form>
+{% endblock %}
