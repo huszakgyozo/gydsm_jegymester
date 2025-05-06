@@ -5,6 +5,9 @@ from app.models.ticketorder import TicketOrder
 
 from sqlalchemy import null, select, and_
 
+from app.models.seat import Seat
+from app.models.ticket import Ticket
+
 
 class TicketOrderService:
     @staticmethod
@@ -22,6 +25,11 @@ class TicketOrderService:
                 return False, "A rendelés nem található!"
             elif ticketorder:
                 ticketorder[0].ticket_active = 0
+
+                tick=db.session.get(Ticket, id)
+                db.session.flush()
+                seat=db.session.get(Seat, tick.seat_id)
+                seat.reserved = False
                 db.session.commit()
                 return True, "Az adott rendelés törölve."
 

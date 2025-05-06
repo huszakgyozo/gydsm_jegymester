@@ -124,6 +124,7 @@
     <Compile Include="jegymester\app\forms\registrationForm.py" />
     <Compile Include="jegymester\app\forms\screeningEditForm.py" />
     <Compile Include="jegymester\app\forms\ticketpurchase.py" />
+    <Compile Include="jegymester\app\forms\validate_ticket.py" />
     <Compile Include="jegymester\app\models\movie.py" />
     <Compile Include="jegymester\app\models\order.py" />
     <Compile Include="jegymester\app\models\role.py" />

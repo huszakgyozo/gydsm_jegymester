@@ -20,6 +20,7 @@ from app.forms.profileEditForm import profileEditForm
 from app.forms.movieEdit import MovieEdit
 from app.forms.newScreening import NewScreeningForm
 from app.forms.screeningEditForm import ScreeningEdit
+from app.forms.validate_ticket import ValidateTicketForm
 import requests
 from app.extensions import auth
 from app.blueprints import role_required, verify_token, get_auth_headers
@@ -148,9 +149,13 @@ def create_app(config_class=Config):
     def ticketlist():
         token = request.cookies.get('token')
         data = verify_token(token)
+        ticket=None
         response = requests.get(
             f'http://localhost:8888/api/ticket/get/usertickets/{data["id"]}', headers=get_auth_headers(token))
-        ticket = response.json()
+        if response.ok:
+            ticket = response.json()
+        else:
+            flash("Nincs jegyed még!")
         return render_template('showticket.html', page="showticket", tickets=ticket, data=data)
 
     def seats_screen_refresh(form):
@@ -381,6 +386,33 @@ def create_app(config_class=Config):
             return redirect(url_for('edit_screening'))
 
         return render_template('edit_screening.html', form=form,data=data,screenings=screenings_json)
+
+
+    @app.route('/validate_ticket', methods=['GET', 'POST'])
+    def validate_ticket():
+        token = request.cookies.get('token')
+        data = verify_token(token)
+        if not verify_token(token):
+            return redirect(url_for('home'))
+
+        form = ValidateTicketForm()
+        if form.validate_on_submit():
+            ticket_id = form.ticket_id.data
+            resp = requests.get(
+                f'http://localhost:8888/api/ticket/get/{ticket_id}',
+                headers=get_auth_headers(token)
+            )
+            print("hiba: ",resp.json())
+            if resp.ok:
+                response = requests.delete(
+                 f'http://localhost:8888/api/ticketorder/delete/{ticket_id}', headers=get_auth_headers(token))
+                flash(f'Jegy érvényesítve!', 'success')
+            else:
+                flash('Érvényesítés sikertelen.', 'danger')
+
+            return redirect(url_for('validate_ticket'))
+
+        return render_template('validate_ticket.html', form=form,data=data)
 
                     
     app.config.from_object(config_class)

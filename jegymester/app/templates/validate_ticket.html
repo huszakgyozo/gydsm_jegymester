@@ -1,22 +1,19 @@
-﻿<!--{% extends 'base.html' %}
-{% block content %}
-<div class="container mt-4">
-    <h2>Jegy érvényesítése</h2>
-    <form method="post">
-        <div class="form-group">
-            <label for="ticket_id">Jegy azonosító:</label>
-            <input type="number" class="form-control" id="ticket_id" name="ticket_id" required>
-        </div>
-        <button type="submit" class="btn btn-primary mt-2">Érvényesítés</button>
-    </form>
+﻿{% extends "base.html" %}
 
-    {% if ticket %}
-    <div class="mt-4">
-        <h4>Jegy adatai:</h4>
-        <p><strong>Film:</strong> {{ ticket.screening.movie_title }}</p>
-        <p><strong>Vetítés:</strong> {{ ticket.screening.start_time }} - {{ ticket.screening.theater.theatname }}</p>
-        <p><strong>Szék:</strong> {{ ticket.seat.seat_number }}</p>
-    </div>
-    {% endif %}
+{% block content %}
+<div>
+    <h1>Jegy érvényesítése</h1>
+
+    <form method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.ticket_id.label() }}
+            {{ form.ticket_id(class="form-control", value=form.ticket_id.data or '') }}
+            {% for error in form.ticket_id.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        {{form.submit}}
+    </form>
 </div>
-{% endblock %}-->
+{% endblock %}

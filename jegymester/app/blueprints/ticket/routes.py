@@ -55,7 +55,7 @@ def ticket_update(id, json_data):
 @bp.get('/get/<int:id>')
 @bp.output(TicketToTicketOrder)
 @bp.auth_required(auth)
-@role_required([1])
+@role_required([1,3])
 def ticketorder_One_ticket(id):
     success, response = TicketService.get_ticket(id)
     if success:
