@@ -1,0 +1,56 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<h1>Vetítés módosítása</h1>
+
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+
+    <p>
+        {{ form.screening_select.label }}<br>
+        {{ form.screening_select(id="screening_select") }}<br>
+        {% for error in form.screening_select.errors %}
+        <span style="color:red">[ {{ error }} ]</span>
+        {% endfor %}
+    </p>
+
+    <p>
+        {{ form.theater_select.label }}<br>
+        {{ form.theater_select }}<br>
+        {% for error in form.theater_select.errors %}
+        <span style="color:red">[ {{ error }} ]</span>
+        {% endfor %}
+    </p>
+
+    <p>
+        {{ form.start_time.label }}<br>
+        {{ form.start_time(type="datetime-local", id="start_time") }}<br>
+        {% for error in form.start_time.errors %}
+        <span style="color:red">[ {{ error }} ]</span>
+        {% endfor %}
+    </p>
+
+    <p>{{ form.submit }}</p>
+</form>
+
+<script>
+const screenings = {
+    {% for screening in screenings %}
+    "{{ screening.id }}": {
+        "theater_id": "{{ screening.theater_id }}",
+        "start_time": "{{ screening.start_time }}"
+    },
+    {% endfor %}
+};
+
+document.getElementById('screening_select').addEventListener('change', function() {
+    const selected = this.value;
+    const data = screenings[selected];
+    if (data) {
+        document.getElementById('start_time').value = data.start_time.replace(' ', 'T');
+        document.querySelector('select[name="theater_select"]').value = data.theater_id;
+    }
+});
+</script>
+
+{% endblock %}

@@ -19,6 +19,7 @@ from app.forms.ticketpurchase import TicketPurchaseForm
 from app.forms.profileEditForm import profileEditForm
 from app.forms.movieEdit import MovieEdit
 from app.forms.newScreening import NewScreeningForm
+from app.forms.screeningEditForm import ScreeningEdit
 import requests
 from app.extensions import auth
 from app.blueprints import role_required, verify_token, get_auth_headers
@@ -338,15 +339,48 @@ def create_app(config_class=Config):
 
     @app.route('/edit_screening', methods=['GET', 'POST'])
     def edit_screening():
-        #form = ScreeningEdit()
-
-        screenings_response = requests.get('http://localhost:8888/api/screening//list_all')
+        form = ScreeningEdit()
+        token = request.cookies.get('token')
+        data = verify_token(token)
+        screenings_response = requests.get('http://localhost:8888/api/movie/list_all')
         theaters_response = requests.get('http://localhost:8888/api/theater/list')
     
         screenings_json = screenings_response.json()
         theaters_json = theaters_response.json()
-        #if form.validate_on_submit():
-        pass
+
+        choices = []
+        for movie in screenings_json:
+            for screening in movie.get('screenings', []):
+                choice_id = f"{movie['id']}|{screening['id']}"
+                choice_label = f"{movie['title']} - {screening['start_time']} ({screening['theater']['theatname']})"
+                choices.append((choice_id, choice_label))
+
+        form.screening_select.choices = choices
+
+        form.theater_select.choices = [(str(t['id']), t['theatname']) for t in theaters_json]
+
+        if form.validate_on_submit():
+            start_time_str = form.start_time.data.strftime("%Y-%m-%d %H:%M:%S")
+            movie_id, screening_id = form.screening_select.data.split('|')
+            response = requests.put(
+                f"http://localhost:8888/api/screening/update/{screening_id}",
+                json={
+                    "theater_id": form.theater_select.data,
+                    "start_time": start_time_str,
+                    "deleted": False,
+                    "movie_id": movie_id
+                },
+                headers=get_auth_headers(token)
+            )
+
+            if response.status_code == 200:
+                flash("Vetítés sikeresen módosítva!", "success")
+            else:
+                flash("Hiba történt a módosítás során.", "danger")
+        
+            return redirect(url_for('edit_screening'))
+
+        return render_template('edit_screening.html', form=form,data=data,screenings=screenings_json)
 
                     
     app.config.from_object(config_class)

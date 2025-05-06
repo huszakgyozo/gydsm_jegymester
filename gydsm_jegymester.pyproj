@@ -36,6 +36,7 @@
     <Content Include="jegymester\.flaskenv" />
     <Content Include="jegymester\app\blueprints\seat\__init__.py" />
     <Content Include="jegymester\app\blueprints\ticket\__init__.py" />
+    <Content Include="jegymester\app\templates\edit_screening.html" />
     <Content Include="jegymester\app\templates\profile.html" />
     <Content Include="jegymester\app\templates\base.html" />
     <Content Include="jegymester\app\templates\index.html" />
@@ -47,6 +48,7 @@
     <Content Include="jegymester\app\templates\screeningAdd.html" />
     <Content Include="jegymester\app\templates\showticket.html" />
     <Content Include="jegymester\app\templates\ticketpurchase.html" />
+    <Content Include="jegymester\app\templates\validate_ticket.html" />
     <Content Include="jegymester\app_db_migrations.bat" />
     <Content Include="requirements.txt" />
   </ItemGroup>
@@ -120,6 +122,7 @@
     <Compile Include="jegymester\app\forms\movieEdit.py" />
     <Compile Include="jegymester\app\forms\newScreening.py" />
     <Compile Include="jegymester\app\forms\registrationForm.py" />
+    <Compile Include="jegymester\app\forms\screeningEditForm.py" />
     <Compile Include="jegymester\app\forms\ticketpurchase.py" />
     <Compile Include="jegymester\app\models\movie.py" />
     <Compile Include="jegymester\app\models\order.py" />

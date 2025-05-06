@@ -38,6 +38,7 @@ class MovieDeleteSchema(Schema):
 
 
 class MovieToScreeningSchema(Schema):
+    id = fields.Integer()
     title = fields.String()
     duration = fields.Integer()
     genre = fields.String()
