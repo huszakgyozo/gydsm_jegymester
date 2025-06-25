@@ -69,6 +69,7 @@
     <Folder Include="jegymester\app\blueprints\user\" />
     <Folder Include="jegymester\app\models\" />
     <Folder Include="jegymester\app\forms\" />
+    <Folder Include="jegymester\app\routes\" />
     <Folder Include="jegymester\app\templates\" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +138,9 @@
     <Compile Include="jegymester\app\models\user.py" />
     <Compile Include="jegymester\app\models\userrole.py" />
     <Compile Include="jegymester\app\models\__init__.py" />
+    <Compile Include="jegymester\app\routes\api_helpers.py" />
+    <Compile Include="jegymester\app\routes\auth.py" />
+    <Compile Include="jegymester\app\routes\main.py" />
     <Compile Include="jegymester\app\__init__.py" />
     <Compile Include="jegymester\config.py" />
     <Compile Include="jegymester\run_app.py" />

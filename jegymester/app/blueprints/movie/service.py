@@ -11,7 +11,7 @@ class MovieService:
     def movie_list_all():
         movies = db.session.execute(select(Movie).filter(
             Movie.deleted.is_(0))).scalars()
-        return True, MovieToScreeningSchema().dump(movies, many=True)
+        return True, MovieToScreeningSchema().dump(movies,many=True)
 
     @staticmethod
     def movie_list_active():

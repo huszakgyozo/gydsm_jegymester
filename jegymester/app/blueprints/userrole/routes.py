@@ -7,7 +7,7 @@ from app.blueprints.userrole.schemas import *
 from app.blueprints.userrole.service import UserroleService
 from app.blueprints.userrole.schemas import UserroleListSchema, UserroleRequestSchema, UserroleResponseSchema, UserroleUpdateSchema
 from app.extensions import auth
-from app.blueprints import role_required
+from app.routes.auth import role_required
 
 
 # ma

@@ -5,7 +5,7 @@ from apiflask import HTTPError
 from app.blueprints.ticketcategory.schemas import *
 from app.blueprints.ticketcategory.service import TicketCategoryService
 from app.extensions import auth
-from app.blueprints import role_required
+from app.routes.auth import role_required
 
 @bp.route('/')
 def index():

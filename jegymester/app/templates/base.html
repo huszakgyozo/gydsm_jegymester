@@ -3,54 +3,56 @@
 <body>
     <div>
         {% if data %}
-        <b>{{ data.email }}:</b>
+        <b>{{ current_user.email }}:</b>
         {% else %}
         <b>Vendég:</b>
         {% endif %}
-        <a href="{{ url_for('home') }}">Kezdőoldal</a>
+        <a href="{{ url_for('main.home') }}">Kezdőoldal</a>
         {% if page != "ticketpurchase" %}
-        <a href="{{ url_for('ticketpurchase') }}">Jegy vásárlás</a>
+        <a href="{{ url_for('main.ticketpurchase') }}">Jegy vásárlás</a>
         {% endif %}
 
 
         {% if page != "movielist" %}
-        <a href="{{ url_for('movielist') }}">Filmek kilistázása</a>
+        <a href="{{ url_for('main.movielist') }}">Filmek kilistázása</a>
         {% endif %}
 
-        {% if not data %}
-        {% if page != "login" %}
-        <a href="{{ url_for('login') }}">Bejelentkezés</a>
-        {% endif %}
-        {% if page != "registrate" %}
-        <a href="{{ url_for('registrate') }}">Regisztráció</a>
-        {% endif %}
+        {% if not current_user %}
+            {% if page != "login" %}
+            <a href="{{ url_for('auth.login') }}">Bejelentkezés</a>
+            {% endif %}
+            {% if page != "registrate" %}
+            <a href="{{ url_for('auth.registrate') }}">Regisztráció</a>
+            {% endif %}
+            {% endif %}
+
+
+            {% if current_user %}
+            {% if page != "ticketlist" %}
+            <a href="{{ url_for('main.ticketlist') }}">Jegyek</a>
+            {% endif %}
+
+            {% if page != "profile" %}
+            <a href="{{ url_for('main.profile') }}">Profil adatok módosítása</a>
+            {% endif %}
+
+            {% if 1 in roles %}
+            <a href="{{ url_for('main.movieadd') }}">Filmek hozzáadása</a>
+            <a href="{{ url_for('main.movie_edit') }}">Film módosítás</a>
+            <a href="{{ url_for('main.new_screening') }}">Vetítés hozzáadás</a>
+            <a href="{{ url_for('main.edit_screening') }}">Vetítés szerkesztés</a>
+            {% endif %}
+
+            {% if 3 in roles %}
+            <a href="{{ url_for('main.validate_ticket') }}">Jegy érvényesítés</a>
+            {% endif %}
+
+            <a href="{{ url_for('auth.logout') }}">Kijelentkezés</a>
+
         {% endif %}
 
 
-        {% if data %}
-        {% if page != "ticketlist" %}
-        <a href="{{ url_for('ticketlist') }}">Jegyek</a>
-        {% endif %}
 
-        {% if page != "profile" %}
-        <a href="{{ url_for('profile') }}">Profil adatok módosítása</a>
-        {% endif %}
-
-        <a href="{{ url_for('logout') }}">Kijelentkezés</a>
-
-
-        {% if 1 in roles %}
-        <a href="{{ url_for('movieadd') }}">Filmek hozzáadása</a>
-        <a href="{{ url_for('movie_edit') }}">Film módosítás</a>
-        <a href="{{ url_for('new_screening') }}">Vetítés hozzáadás</a>
-        <a href="{{ url_for('edit_screening') }}">Vetítés szerkesztés</a>
-        {% endif %}
-
-        {% if 3 in roles %}
-        <a href="{{ url_for('validate_ticket') }}">Jegy érvényesítés</a>
-        {% endif %}
-
-        {% endif %}
     </div>
     
     <hr>

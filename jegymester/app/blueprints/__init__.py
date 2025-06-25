@@ -3,46 +3,15 @@ from apiflask import APIBlueprint
 from app.models import *
 
 from app.extensions import auth
-from flask import current_app, flash
+from flask import current_app, flash, request
 from authlib.jose import jwt
 from datetime import datetime
 from apiflask import HTTPError
 from functools import wraps
 
 
+bp = APIBlueprint('blueprint', __name__, tag="default")
 
-bp = APIBlueprint('main', __name__, tag="default")
-
-def get_auth_headers(token):
-    return {
-        'Authorization': f'Bearer {token}',
-        'Content-Type': 'application/json'
-    }
-
-@auth.verify_token
-def verify_token(token):
-    try:
-        data = jwt.decode(
-            token.encode('ascii'),
-            current_app.config['SECRET_KEY'],
-        )
-        if data["exp"] < int(datetime.now().timestamp()):
-            return None
-        return data
-    except:
-        return None
-
-def role_required(roles):
-    def wrapper(fn):
-        @wraps(fn)  
-        def decorated_function(*args, **kwargs):
-            user_roles = [item["id"] for item in auth.current_user.get("roles")]
-            for role in roles:
-                if role in user_roles:
-                    return fn(*args, **kwargs)        
-            raise HTTPError(message="Access denied", status_code=403)
-        return decorated_function
-    return wrapper
 
 from app.blueprints.movie import bp as bp_movie
 bp.register_blueprint(bp_movie, url_prefix='/movie')

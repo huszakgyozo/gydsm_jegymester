@@ -16,18 +16,18 @@
     </thead>
     <tbody>
         {% for m in movies %}
-        <tr >
-            <td  rowspan="2">{{ m.title }}</td>
+        <tr>
+            <td rowspan="2">{{ m.title }}</td>
             <td>{{ m.duration }}</td>
             <td>{{ m.genre }}</td>
             <td>{{ m.age_limit }}</td>
             <td>{{ m.description }}</td>
-            <tr>
-            {% for s in m["screenings"] %}
+        </tr>
+        <tr>
+            {% for s in m.screenings %}
             <td>{{ s.start_time }}</td>
-            <td>{{s.theater.theatname}}</td>
+            <td>{{ s.theater.theatname }}</td>
             {% endfor %}
-            </tr>
         </tr>
         {% endfor %}
     </tbody>

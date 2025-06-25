@@ -5,7 +5,7 @@ from apiflask import HTTPError
 from app.blueprints.order.schemas import *
 from app.blueprints.order.service import OrderService
 from app.extensions import auth
-from app.blueprints import role_required
+from app.routes.auth import role_required
 
 @bp.route('/')
 def index():

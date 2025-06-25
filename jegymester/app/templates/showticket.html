@@ -36,7 +36,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ url_for('ticket_delete', ticketid=ticket.id) }}">Jegy törlés</a>
+                                <a href="{{ url_for('main.ticket_delete', ticketid=ticket.id) }}">Jegy törlés</a>
                             </td>
                         </tr>
                         {% endfor %}

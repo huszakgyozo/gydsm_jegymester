@@ -5,7 +5,7 @@ from apiflask import HTTPError
 from app.blueprints.ticketorder.schemas import *
 from app.blueprints.ticketorder.service import TicketOrderService
 from app.extensions import auth
-from app.blueprints import role_required
+from app.routes.auth import role_required
 
 
 @bp.route('/')

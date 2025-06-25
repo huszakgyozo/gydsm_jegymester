@@ -6,8 +6,7 @@ from app.blueprints.role.schemas import *
 from app.blueprints.role.service import RoleService
 from app.blueprints.role.schemas import RoleResponseSchema, RoleUpdateSchema
 from app.extensions import auth
-from app.blueprints import role_required
-# ma
+from app.routes.auth import role_required
 
 @bp.route('/')
 def index():

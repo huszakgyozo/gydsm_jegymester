@@ -6,9 +6,9 @@ from apiflask import HTTPError
 from app.blueprints.user.schemas import *
 from app.blueprints.user.service import UserService
 from app.blueprints.user.schemas import UserLoginSchema, UserRequestSchema, UserResponseSchema
-from jegymester.app.blueprints.user.service import UserService
+from app.blueprints.user.service import UserService
 from app.extensions import auth
-from app.blueprints import role_required
+from app.routes.auth import role_required
 
 
 @bp.route('/')
